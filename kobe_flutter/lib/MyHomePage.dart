@@ -24,42 +24,12 @@ class _MyHomePage extends State<MyHomePage> {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "K.O.B.E",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w700,
-            height: 0,
-          ),
-        ),
-        backgroundColor: Color(0xFFFFD974),
-        actions: [
-          InkWell(
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                (route) => false,
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.exit_to_app),
-            ),
-          ),
-        ],
-      ),
-
       /// Body y direccionamineto de las pages seleccionando un screens
       body: IndexedStack(
         index: selctnavbar,
         children: const [
           inicio(),
-          recetas(),
+          Recetas(),
           biblioteca(),
           juegos(),
         ],
@@ -74,7 +44,7 @@ class _MyHomePage extends State<MyHomePage> {
             backgroundColor: Colors.white,
             color: Colors.black,
             activeColor: Colors.white,
-            tabBackgroundColor: const Color.fromRGBO(234, 92, 0, 1),
+            tabBackgroundColor: Color.fromARGB(254, 238, 126, 51),
             gap: 8,
             padding: EdgeInsets.all(16),
             tabs: const [

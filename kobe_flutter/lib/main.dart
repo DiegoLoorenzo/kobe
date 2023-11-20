@@ -27,6 +27,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Aplicacion K.O.B.E",
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+      ),
       home: MyHomePage(),
     );
   }
