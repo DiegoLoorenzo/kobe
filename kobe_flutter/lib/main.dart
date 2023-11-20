@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/MyHomePage.dart';
+//import 'package:kobe_flutter/login/LoginPage.dart';
+import 'package:kobe_flutter/Screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Aplicacion K.O.B.E",
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: MyHomePage(),
+      home: Screen(),
     );
   }
 }

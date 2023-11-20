@@ -73,7 +73,6 @@ class _RecetasState extends State<Recetas> {
                           icon: Icon(Icons.file_download),
                           color: const Color.fromARGB(255, 0, 0, 0),
                           onPressed: () {
-                            // Lógica del botón Descargas
                             print('Botón de Descargas presionado');
                           },
                         ),
@@ -89,7 +88,6 @@ class _RecetasState extends State<Recetas> {
                           icon: Icon(Icons.settings),
                           color: const Color.fromARGB(255, 0, 0, 0),
                           onPressed: () {
-                            // Lógica del botón Configuración
                             print('Botón de Configuración presionado');
                           },
                         ),
@@ -113,8 +111,7 @@ class _RecetasState extends State<Recetas> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color.fromARGB(
-                                61, 238, 126, 51), // Bordes del tab
+                            color: Color.fromARGB(61, 238, 126, 51),
                             // Color de fondo del tab no seleccionado
                           ),
                           child: Align(
@@ -126,8 +123,7 @@ class _RecetasState extends State<Recetas> {
                       Tab(
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(10), // Bordes del tab
+                            borderRadius: BorderRadius.circular(10),
                             color: Color.fromARGB(61, 238, 126,
                                 51), // Color de fondo del tab no seleccionado
                           ),
@@ -147,7 +143,7 @@ class _RecetasState extends State<Recetas> {
                         // Contenido de la pestaña Descargas
                         Column(
                           children: [
-                            // Campo de búsqueda personalizado
+                            // Búsqueda
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
@@ -169,7 +165,7 @@ class _RecetasState extends State<Recetas> {
                                 ),
                               ),
                             ),
-                            // ListView con registros filtrados
+                            // ListView
                             Expanded(
                               child: ListView.builder(
                                 itemCount: registrosFiltrados.length,

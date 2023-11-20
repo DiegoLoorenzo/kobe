@@ -15,7 +15,6 @@ class _inicioState extends State<inicio> {
     return Scaffold(
       body: Stack(
         children: [
-          // Fondo del AppBar con forma personalizada
           ClipPath(
             clipper: CustomClip(),
             child: Container(
@@ -28,17 +27,37 @@ class _inicioState extends State<inicio> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(width: 8),
+                    // Contenedor del segundo icono
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 236, 185),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.settings),
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        onPressed: () {
+                          print('Botón de Configuración presionado');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 60),
                 Text(
-                  'Bienvenido a K.O.B.Esss',
+                  'Bienvenido a K.O.B.E',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 40,
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(height: 20),
-                // Puedes agregar más widgets según las secciones de tu dashboard
               ],
             ),
           ),
