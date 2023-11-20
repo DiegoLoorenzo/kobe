@@ -10,6 +10,8 @@ class inicio extends StatefulWidget {
 }
 
 class _inicioState extends State<inicio> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +44,26 @@ class _inicioState extends State<inicio> {
                         color: const Color.fromARGB(255, 0, 0, 0),
                         onPressed: () {
                           print('Botón de Configuración presionado');
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    // Botón para cerrar sesión
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 236, 185),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.exit_to_app),
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        onPressed: () async {
+                          await _auth.signOut();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
                         },
                       ),
                     ),

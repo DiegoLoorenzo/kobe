@@ -38,6 +38,7 @@ dependencies:
   flutter_signin_button: null
   google_nav_bar: ^5.0.6
   google_sign_in: null
+  shared_preferences:
 
 dev_dependencies:
   flutter_launcher_icons:

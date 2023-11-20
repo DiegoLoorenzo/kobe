@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
 import 'package:kobe_flutter/login/CreateUserPage.dart';
 import 'package:kobe_flutter/login/reset_password/reset_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,10 +18,23 @@ class _LoginState extends State<LoginPage> {
   late String email, password;
   final _formkey = GlobalKey<FormState>();
   String error = '';
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    checkLoggedIn();
+  }
+
+  Future<void> checkLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+    }
   }
 
   @override
@@ -248,6 +262,7 @@ class _LoginState extends State<LoginPage> {
           if (_formkey.currentState!.validate()) {
             _formkey.currentState!.save();
             UserCredential? credenciales = await login(email, password);
+
             if (credenciales != null) {
               if (credenciales.user != null) {
                 if (credenciales.user!.emailVerified) {
@@ -256,6 +271,9 @@ class _LoginState extends State<LoginPage> {
                     MaterialPageRoute(builder: (context) => MyHomePage()),
                     (Route<dynamic> route) => false,
                   );
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setBool('isLoggedIn', true);
                 } else {
                   setState(() {
                     error = "Debes verificar tu correo antes de acceder";
