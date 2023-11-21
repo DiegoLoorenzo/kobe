@@ -48,7 +48,6 @@ class _ButtomNavbarState extends State<ButtomNavbar> {
             setState(() {
               selctnavbar = index;
             });
-            // Puedes agregar tu lógica para cambiar de pestaña aquí si es necesario
           },
         ),
       ),

@@ -17,8 +17,7 @@ class _ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color(0xFFFFD974), // Color de fondo para toda la pantalla
+      backgroundColor: Color(0xFFFFD974), // Color de fondo
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +42,7 @@ class _ScreenState extends State<Screen> {
               ),
             ),
           ),
-          SizedBox(height: 20), // Agregado un espacio entre el texto y el botón
+          SizedBox(height: 20),
           butonScreen(),
         ],
       ),
@@ -52,7 +51,7 @@ class _ScreenState extends State<Screen> {
 
   Widget butonScreen() {
     return FractionallySizedBox(
-      widthFactor: 0.8, // Haciendo el botón más ancho
+      widthFactor: 0.8,
       child: ElevatedButton(
         onPressed: () {
           Navigator.pushAndRemoveUntil(
@@ -62,7 +61,7 @@ class _ScreenState extends State<Screen> {
           );
         },
         style: ElevatedButton.styleFrom(
-          primary: Color(0xFFEE7D33), // Cambiando el color del botón
+          primary: Color(0xFFEE7D33),
           padding: EdgeInsets.symmetric(vertical: 15),
         ),
         child: Text(

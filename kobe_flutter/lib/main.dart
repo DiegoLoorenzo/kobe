@@ -13,7 +13,7 @@ void main() async {
   //await FirebaseAuth.instance.setPersistence( Persistence.LOCAL); // Esto configura la persistencia local
   if (kIsWeb) {
     await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-  } // Esto configura la persistencia local
+  } // Esto configura el inicio de sesion local
   runApp(MyApp());
 }
 

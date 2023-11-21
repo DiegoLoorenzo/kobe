@@ -18,15 +18,8 @@ class _LoginState extends State<LoginPage> {
   late String email, password;
   final _formkey = GlobalKey<FormState>();
   String error = '';
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    checkLoggedIn();
-  }
-
   Future<void> checkLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (FirebaseAuth.instance.currentUser != null) {
@@ -40,58 +33,67 @@ class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: BoxDecoration(
-                color: Color(0xFFFFD974),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(80.0),
-                  bottomRight: Radius.circular(80.0),
-                ),
+      body: FutureBuilder(
+        future: checkLoggedIn(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // Muestra una pantalla de carga mientras se verifica el inicio de sesión.
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFFD974),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(80.0),
+                        bottomRight: Radius.circular(80.0),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: Image.asset('assets/icon250.png'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "Bienvenido a K.O.B.E",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 30,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                        height: -1,
+                      ),
+                    ),
+                  ),
+                  Offstage(
+                    offstage: error == '',
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        error,
+                        style: TextStyle(color: Colors.red, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: formulario(),
+                  ),
+                  butonLogin(),
+                  nuevoAqui(),
+                  forgetpassword(),
+                  buildOrLine(),
+                  BotonGoogle(),
+                ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Image.asset('assets/icon250.png'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "Bienvenido a K.O.B.E",
-                style: TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 30,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w700,
-                  height: -1,
-                ),
-              ),
-            ),
-            Offstage(
-              offstage: error == '',
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  error,
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: formulario(),
-            ),
-            butonLogin(),
-            nuevoAqui(),
-            forgetpassword(),
-            buildOrLine(),
-            BotonGoogle(),
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }
@@ -304,15 +306,15 @@ class _LoginState extends State<LoginPage> {
       return userCredential;
     } on FirebaseException catch (e) {
       if (e.code == 'User-not-found') {
-        //todo usuario no encontrado
+        //Usuario no encontrado
         setState(() {
           error = "Usuario no encontrado";
         });
       }
       if (e.code == 'wrong-password') {
-        //Toda contraseña incorrecta
+        //Contraseña incorrecta
         setState(() {
-          error = "contraseña incorrecta";
+          error = "Contraseña incorrecta";
         });
       }
     }
