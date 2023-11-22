@@ -12,6 +12,7 @@ class CreateUserPage extends StatefulWidget{
 }
 
 class _CreateUserState extends State<CreateUserPage>{
+  bool passwordVisible = true;
   late String email, password;
   final _formkey = GlobalKey<FormState>();
   String error='';
@@ -19,7 +20,7 @@ class _CreateUserState extends State<CreateUserPage>{
   @override
   void initState() {
     super.initState();
-
+    passwordVisible = true;
   }
 
 ///Almacenamiento de todos los Build y diseño de la interfaz
@@ -128,14 +129,24 @@ class _CreateUserState extends State<CreateUserPage>{
 //Campo de de la contraseña
   Widget buildPassword(){
     return TextFormField(
+      obscureText: passwordVisible,
       decoration: InputDecoration(
         labelText: "Contraseña",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: new BorderSide(color: Colors.black)
-        )
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(passwordVisible
+          ? Icons.visibility
+          : Icons.visibility_off),
+          onPressed: () {
+            setState(() {
+              passwordVisible = !passwordVisible;
+            });
+          },
+          ),
       ),
-      obscureText: true,
       validator: (value){
         if(value!.isEmpty){
           return "Este campo es obligatorio";

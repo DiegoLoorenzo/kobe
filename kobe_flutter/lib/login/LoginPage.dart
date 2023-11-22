@@ -15,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+  bool passwordVisible = true;
   late String email, password;
   final _formkey = GlobalKey<FormState>();
   String error = '';
@@ -236,14 +237,24 @@ class _LoginState extends State<LoginPage> {
 
   Widget buildPassword() {
     return TextFormField(
+      obscureText: passwordVisible,
       decoration: InputDecoration(
         labelText: "Contraseña",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.black),
         ),
+        suffixIcon: IconButton(
+          icon: Icon(passwordVisible
+              ? Icons.visibility
+              : Icons.visibility_off),
+          onPressed: () {
+              setState(() {
+                passwordVisible = !passwordVisible;
+              });
+          },
+          ),
       ),
-      obscureText: true,
       validator: (value) {
         if (value!.isEmpty) {
           return "Este campo es obligatorio";
