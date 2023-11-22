@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:kobe_flutter/login/LoginPage.dart';
 import 'package:kobe_flutter/pages/Biblioteca/biblioteca.dart';
 import 'package:kobe_flutter/pages/Recetas/recetas.dart';
 import 'package:kobe_flutter/pages/inicio.dart';
