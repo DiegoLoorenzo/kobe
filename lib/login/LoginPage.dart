@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
 import 'package:kobe_flutter/login/CreateUserPage.dart';
 import 'package:kobe_flutter/login/reset_password/reset_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,51 +20,82 @@ class _LoginState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   String error = '';
 
+  Map<String, String> mensajesErrorPersonalizados = {
+    'user-not-found': 'Usuario no encontrado',
+    'wrong-password': 'Contraseña incorrecta',
+    'invalid-email': 'Correo Electronico Incorrecto',
+    'INVALID_LOGIN_CREDENTIALS': 'Contraseña Incorrecta',
+  };
+
+  Future<bool> isUserLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userEmail = prefs.getString('user_email');
+    String? userUid = prefs.getString('user_uid');
+    return userEmail != null && userUid != null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-              padding: const EdgeInsets.all(80.0),
-              child: Image.asset('assets/icon250.png')),
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Text(
-              "Bienvenido a K.O.B.E",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 30,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w700,
-                  height: -1),
-            ),
-          ),
-          Offstage(
-            offstage: error == '',
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 16),
+    return FutureBuilder<bool>(
+      future: isUserLoggedIn(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data == true) {
+            // Si hay una sesión iniciada
+            return MyHomePage();
+          } else {
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(80.0),
+                      child: Image.asset('assets/icon250.png'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Text(
+                        "Bienvenido a K.O.B.E",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 30,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          height: -1,
+                        ),
+                      ),
+                    ),
+                    Offstage(
+                      offstage: error == '',
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          error,
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: formulario(),
+                    ),
+                    butonLogin(),
+                    nuevoAqui(),
+                    forgetpassword(),
+                    buildOrLine(),
+                    BotonGoogle(),
+                  ],
+                ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: formulario(),
-          ),
-          butonLogin(),
-          nuevoAqui(),
-          forgetpassword(),
-          buildOrLine(),
-          BotonGoogle(),
-        ],
-      ),
-    ));
+            );
+          }
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 
   Widget BotonGoogle() {
@@ -258,20 +290,22 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
+  //Metodo login
   Future<UserCredential?> login(String email, String passwd) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: passwd);
+      if (userCredential.user != null) {
+        // Guardar información del usuario en SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('user_email', userCredential.user!.email ?? '');
+        prefs.setString('user_uid', userCredential.user!.uid ?? '');
+      }
+
       return userCredential;
     } on FirebaseException catch (e) {
       setState(() {
-        if (e.code == 'user-not-found') {
-          error = "Usuario no encontrado";
-        } else if (e.code == 'wrong-password') {
-          error = "Contraseña incorrecta";
-        } else {
-          error = "Ocurrió un error: ${e.code}";
-        }
+        error = mensajesErrorPersonalizados[e.code] ?? '${e.code}';
       });
       return null;
     }
