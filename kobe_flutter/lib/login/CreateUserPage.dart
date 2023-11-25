@@ -145,7 +145,7 @@ class _CreateUserState extends State<CreateUserPage>{
               passwordVisible = !passwordVisible;
             });
           },
-          ),
+        ),
       ),
       validator: (value){
         if(value!.isEmpty){

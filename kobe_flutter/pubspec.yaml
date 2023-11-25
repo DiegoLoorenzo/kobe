@@ -28,17 +28,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cached_network_image: null
-  cloud_firestore: null
+  cached_network_image:
+  cloud_firestore:
   cupertino_icons: ^1.0.2
-  firebase_auth: null
-  firebase_core: null
+  firebase_auth:
+  firebase_core:
   flutter:
     sdk: flutter
-  flutter_signin_button: null
+  flutter_signin_button:
   google_nav_bar: ^5.0.6
-  google_sign_in: null
-  shared_preferences:
+  google_sign_in:
 
 dev_dependencies:
   flutter_launcher_icons:

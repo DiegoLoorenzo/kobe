@@ -5,111 +5,67 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
 import 'package:kobe_flutter/login/CreateUserPage.dart';
 import 'package:kobe_flutter/login/reset_password/reset_password.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatefulWidget{
   @override
-  State createState() {
+  State createState(){
     return _LoginState();
   }
 }
 
-class _LoginState extends State<LoginPage> {
+class _LoginState extends State<LoginPage>{
   bool passwordVisible = true;
-  late String email, password;
+  String email = '', password = '';
   final _formkey = GlobalKey<FormState>();
   String error = '';
 
   @override
-  Future<void> checkLoggedIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (FirebaseAuth.instance.currentUser != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
-      );
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: checkLoggedIn(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Muestra una pantalla de carga mientras se verifica el inicio de sesión.
-          } else {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFFD974),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(80.0),
-                        bottomRight: Radius.circular(80.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Image.asset('assets/icon250.png'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      "Bienvenido a K.O.B.E",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 30,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                        height: -1,
-                      ),
-                    ),
-                  ),
-                  Offstage(
-                    offstage: error == '',
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        error,
-                        style: TextStyle(color: Colors.red, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: formulario(),
-                  ),
-                  butonLogin(),
-                  nuevoAqui(),
-                  forgetpassword(),
-                  buildOrLine(),
-                  BotonGoogle(),
-                ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(80.0),
+              child: Image.asset('assets/icon250.png')
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Text("Bienvenido a K.O.B.E", style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),
+              fontSize: 30, fontFamily: 'Poppins', fontWeight: FontWeight.w700, height: -1),),
+            ),
+            Offstage(
+              offstage: error == '',
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(error, style: TextStyle(color: Colors.red, fontSize: 16),),
               ),
-            );
-          }
-        },
-      ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: formulario(),
+            ),
+            butonLogin(),
+            nuevoAqui(),
+            forgetpassword(),
+            buildOrLine(),
+            BotonGoogle(),
+          ],
+        ),
+      )
     );
   }
 
-  Widget BotonGoogle() {
+  Widget BotonGoogle(){
     return Column(
       children: [
         SignInButton(Buttons.Google, onPressed: () async {
           await entrarConGoogle();
-          if (FirebaseAuth.instance.currentUser != null) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MyHomePage()),
-              (Route<dynamic> route) => false,
-            );
+          if(FirebaseAuth.instance.currentUser != null){
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage()),
+                  (Route<dynamic> route) => false);
           }
         }),
       ],
@@ -118,16 +74,15 @@ class _LoginState extends State<LoginPage> {
 
   Future<UserCredential> entrarConGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? autentication =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? authentication = await googleUser?.authentication;
     final credentials = GoogleAuthProvider.credential(
-      accessToken: autentication?.accessToken,
-      idToken: autentication?.idToken,
+      accessToken: authentication?.accessToken,
+      idToken: authentication?.idToken
     );
     return await FirebaseAuth.instance.signInWithCredential(credentials);
   }
 
-  Widget buildOrLine() {
+  Widget buildOrLine(){
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -139,36 +94,19 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Widget nuevoAqui() {
+  Widget nuevoAqui(){
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          "¿No Tienes una Cuenta?",
-          style: TextStyle(
-            color: Color(0xFF000000),
-            fontSize: 15,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        Text("¿No Tienes una Cuenta?", style: TextStyle(color: Color(0xFF000000), fontSize: 15,
+          fontFamily: 'Poppins', fontWeight: FontWeight.w500),),
         TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateUserPage()),
-            );
-          },
-          child: Text(
-            "Registrate",
-            style: TextStyle(
-              color: Color(0xFF3FA8EE),
-              fontSize: 15,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CreateUserPage()));
+          }, 
+          child: Text("Registrate", style: TextStyle(color: Color(0xFF3FA8EE), fontSize: 15,
+            fontFamily: 'Poppins', fontWeight: FontWeight.w700),),
         ),
       ],
     );
@@ -181,53 +119,41 @@ class _LoginState extends State<LoginPage> {
       children: [
         TextButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => reset_password()),
-            );
+            Navigator.push(context, MaterialPageRoute(builder: (context) => reset_password()));
           },
-          child: const Text(
-            "¿Olvidaste tu Contraseña?",
-            style: TextStyle(
-              color: Color(0xFF3FA8EE),
-              fontSize: 15,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: const Text("¿Olvidaste tu Contraseña?", style: TextStyle(color: Color(0xFF3FA8EE), fontSize: 15,
+          fontFamily: 'Poppins', fontWeight: FontWeight.w700),),
         ),
       ],
     );
   }
 
-  Widget formulario() {
+  Widget formulario(){
     return Form(
       key: _formkey,
-      child: Column(
-        children: [
-          buildEmail(),
-          const Padding(padding: EdgeInsets.only(top: 12)),
-          buildPassword(),
-        ],
-      ),
+      child: Column(children: [
+        buildEmail(),
+        const Padding(padding: EdgeInsets.only(top: 12)),
+        buildPassword()
+      ],)
     );
   }
 
-  Widget buildEmail() {
+  Widget buildEmail(){
     return TextFormField(
       decoration: InputDecoration(
         labelText: "Email",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
-        ),
+          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0))
+        )
       ),
       keyboardType: TextInputType.emailAddress,
       onSaved: (String? value) {
         email = value!;
       },
-      validator: (value) {
-        if (value!.isEmpty) {
+      validator: (value){
+        if(value!.isEmpty){
           return "Este campo es obligatorio";
         }
         return null;
@@ -235,28 +161,30 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Widget buildPassword() {
+  Widget buildPassword(){
     return TextFormField(
       obscureText: passwordVisible,
       decoration: InputDecoration(
-        labelText: "Contraseña",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: Colors.black)
         ),
+        hintText: 'Contraseña',
         suffixIcon: IconButton(
           icon: Icon(passwordVisible
               ? Icons.visibility
               : Icons.visibility_off),
           onPressed: () {
-              setState(() {
-                passwordVisible = !passwordVisible;
-              });
+            setState(() {
+              passwordVisible = !passwordVisible;
+            });
           },
-          ),
+        ),
       ),
-      validator: (value) {
-        if (value!.isEmpty) {
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.done,
+      validator: (value){
+        if(value!.isEmpty){
           return "Este campo es obligatorio";
         }
         return null;
@@ -267,26 +195,19 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  Widget butonLogin() {
+  Widget butonLogin(){
     return FractionallySizedBox(
       widthFactor: 0.6,
       child: ElevatedButton(
         onPressed: () async {
-          if (_formkey.currentState!.validate()) {
+          if(_formkey.currentState!.validate()){
             _formkey.currentState!.save();
-            UserCredential? credenciales = await login(email, password);
-
-            if (credenciales != null) {
-              if (credenciales.user != null) {
-                if (credenciales.user!.emailVerified) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()),
-                    (Route<dynamic> route) => false,
-                  );
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setBool('isLoggedIn', true);
+            UserCredential? credentials = await login(email, password);
+            if(credentials != null){
+              if(credentials.user != null){
+                if(credentials.user!.emailVerified){
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage()),
+                    (Route<dynamic> route) => false);
                 } else {
                   setState(() {
                     error = "Debes verificar tu correo antes de acceder";
@@ -296,38 +217,27 @@ class _LoginState extends State<LoginPage> {
             }
           }
         },
-        child: Text(
-          "Iniciar Sesión",
-          style: TextStyle(
-            color: Color(0xFFFFFFFF),
-            fontSize: 20,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        child: Text("Iniciar Sesión", style: TextStyle(color: Color(0xFFFFFFFF),
+        fontSize: 20, fontFamily: 'Poppins', fontWeight: FontWeight.w700),),
       ),
     );
   }
 
-//Accion para conectar Firebase al Proyecto
   Future<UserCredential?> login(String email, String passwd) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: passwd);
       return userCredential;
-    } on FirebaseException catch (e) {
-      if (e.code == 'User-not-found') {
-        //Usuario no encontrado
-        setState(() {
+    } on FirebaseException catch(e) {
+      setState(() {
+        if(e.code == 'user-not-found'){
           error = "Usuario no encontrado";
-        });
-      }
-      if (e.code == 'wrong-password') {
-        //Contraseña incorrecta
-        setState(() {
+        } else if(e.code == 'wrong-password'){
           error = "Contraseña incorrecta";
-        });
-      }
+        } else {
+          error = "Ocurrió un error: ${e.code}";
+        }
+      });
+      return null;
     }
   }
 }
