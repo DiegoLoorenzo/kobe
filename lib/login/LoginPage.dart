@@ -19,6 +19,13 @@ class _LoginState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   String error = '';
 
+  Map<String, String> mensajesErrorPersonalizados = {
+    'user-not-found': 'Usuario no encontrado',
+    'wrong-password': 'Contraseña incorrecta',
+    'invalid-email': 'Correo Electronico Incorrecto',
+    'INVALID_LOGIN_CREDENTIALS': 'Contraseña Incorrecto',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,13 +272,7 @@ class _LoginState extends State<LoginPage> {
       return userCredential;
     } on FirebaseException catch (e) {
       setState(() {
-        if (e.code == 'user-not-found') {
-          error = "Usuario no encontrado";
-        } else if (e.code == 'wrong-password') {
-          error = "Contraseña incorrecta";
-        } else {
-          error = "Ocurrió un error: ${e.code}";
-        }
+        error = mensajesErrorPersonalizados[e.code] ?? '${e.code}';
       });
       return null;
     }
