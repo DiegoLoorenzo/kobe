@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
 import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
-import 'package:kobe_flutter/pages/juegos/pages/review_quiz_page.dart';
+import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
 
 class juegos extends StatefulWidget {
 
