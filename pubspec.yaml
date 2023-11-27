@@ -40,6 +40,9 @@ dependencies:
   google_sign_in:
   url_launcher:
   shared_preferences:
+  firebase_storage:
+  file_picker:
+  easy_pdf_viewer:
 
 
 dev_dependencies:
