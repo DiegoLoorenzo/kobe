@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/pages/Politica_de_Privacidad.dart';
+import 'package:kobe_flutter/login/i18n.dart';
 
 class CreateUserPage extends StatefulWidget {
   @override
@@ -99,14 +100,70 @@ class _CreateUserState extends State<CreateUserPage> {
         key: _formkey,
         child: Column(
           children: [
-            buildEmail(),
+            buildEmailFormField(),
             const Padding(padding: EdgeInsets.only(top: 12)),
-            buildPassword()
+            buildPasswordFormField()
           ],
         ));
   }
 
-//Boton para evr las Politicas de Privacidad
+  //Campo del Email
+  Widget buildEmailFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+          labelText: "Email",
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: new BorderSide(color: Colors.black))),
+      keyboardType: TextInputType.emailAddress,
+      onSaved: (String? value) {
+        email = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Este campo es obligatorio";
+        } else if (value.length < 5 || value.length > 50) {
+          return "La longitud del correo electrónico debe estar entre 5 y 50 caracteres";
+        }
+        return null;
+      },
+    );
+  }
+
+//Campo de la contraseña
+  Widget buildPasswordFormField() {
+    return TextFormField(
+      obscureText: passwordVisible,
+      decoration: InputDecoration(
+        labelText: "Contraseña",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: new BorderSide(color: Colors.black),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+          onPressed: () {
+            setState(() {
+              passwordVisible = !passwordVisible;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Este campo es obligatorio";
+        } else if (value.length < 6 || value.length > 20) {
+          return "La longitud de la contraseña debe estar entre 6 y 20 caracteres";
+        }
+        return null;
+      },
+      onSaved: (String? value) {
+        password = value!;
+      },
+    );
+  }
+
+  //Boton para ver las Politicas de Privacidad
   Widget politica() {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -141,58 +198,7 @@ class _CreateUserState extends State<CreateUserPage> {
     );
   }
 
-//Campo del Email
-  Widget buildEmail() {
-    return TextFormField(
-      decoration: InputDecoration(
-          labelText: "Email",
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: new BorderSide(color: Colors.black))),
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (String? value) {
-        email = value!;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Este campo es obligatorio";
-        }
-        return null;
-      },
-    );
-  }
-
-//Campo de de la contraseña
-  Widget buildPassword() {
-    return TextFormField(
-      obscureText: passwordVisible,
-      decoration: InputDecoration(
-        labelText: "Contraseña",
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: new BorderSide(color: Colors.black)),
-        suffixIcon: IconButton(
-          icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            setState(() {
-              passwordVisible = !passwordVisible;
-            });
-          },
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Este campo es obligatorio";
-        }
-        return null;
-      },
-      onSaved: (String? value) {
-        password = value!;
-      },
-    );
-  }
-
-//Bonton crear usuario
+  //Bonton crear usuario
   Widget butonCrearUsuario() {
     return FractionallySizedBox(
       widthFactor: 0.6,
@@ -201,38 +207,18 @@ class _CreateUserState extends State<CreateUserPage> {
           if (_formkey.currentState!.validate()) {
             _formkey.currentState!.save();
             if (acceptPolicy) {
-              try {
-                UserCredential userCredential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: email, password: password);
-
-                if (userCredential.user != null) {
-                  await userCredential.user!.sendEmailVerification();
-                  Navigator.of(context).pop();
-                } else {
-                  setState(() {
-                    error = "Error al crear el usuario";
-                  });
-                }
-              } on FirebaseAuthException catch (e) {
+              UserCredential? userCredential = await crear(email, password);
+              if (userCredential != null && userCredential.user != null) {
+                await userCredential.user!.sendEmailVerification();
+                // Limpiar el campo de error para que no se muestre después del éxito.
                 setState(() {
-                  if (e.code == 'email-already-in-use') {
-                    error = "El correo ya se encuentra en uso";
-                  } else if (e.code == 'weak-password') {
-                    error = "Contraseña débil";
-                  } else {
-                    error = "Error al crear el usuario: ${e.message}";
-                  }
+                  error = '';
                 });
-              } catch (e) {
-                print(e.toString());
-                setState(() {
-                  error = "Error al crear el usuario";
-                });
+                Navigator.of(context).pop();
               }
             } else {
               setState(() {
-                error = "Debes aceptar la Política de Privacidad";
+                error = AppLocalizations.translate('acceptPrivacyError');
               });
             }
           }
@@ -251,7 +237,17 @@ class _CreateUserState extends State<CreateUserPage> {
     );
   }
 
-  ///Future Para la conexion de Firebase ala registro
+  // Manejar los formatos del email
+  bool isValidEmail(String email) {
+    // Aquí debes implementar la lógica para validar el formato del correo electrónico.
+    // Puedes utilizar expresiones regulares o cualquier otra lógica que prefieras.
+    // Aquí hay un ejemplo básico utilizando una expresión regular para verificar el formato del correo electrónico.
+    final emailRegExp =
+        RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+    return emailRegExp.hasMatch(email);
+  }
+
+  // Future Para la conexión de Firebase al registro
   Future<UserCredential?> crear(String email, String passwd) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -259,19 +255,25 @@ class _CreateUserState extends State<CreateUserPage> {
       return userCredential;
     } on FirebaseException catch (e) {
       if (e.code == 'email-already-in-use') {
-        //todo crear contraseña
         setState(() {
-          error = "El correo ya se encuentra en uso";
+          error = AppLocalizations.translate('emailInUseError');
+        });
+      } else if (e.code == 'weak-password') {
+        setState(() {
+          error = AppLocalizations.translate('weakPasswordError');
+        });
+      } else {
+        setState(() {
+          error = AppLocalizations.translate('createUserError');
         });
       }
-      if (e.code == 'wrong-password') {
-        //Toda contraseña muy debil
-        setState(() {
-          error = "contraseña debil";
-        });
-      }
+      return null; // Importante: devolver null en caso de error.
     } catch (e) {
       print(e.toString());
+      setState(() {
+        error = AppLocalizations.translate('createUserError');
+      });
+      return null; // Importante: devolver null en caso de error.
     }
   }
 }
