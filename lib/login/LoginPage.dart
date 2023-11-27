@@ -51,7 +51,7 @@ class _LoginState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(80.0),
+                      padding: const EdgeInsets.all(40.0),
                       child: Image.asset('assets/icon250.png'),
                     ),
                     Padding(
@@ -215,7 +215,7 @@ class _LoginState extends State<LoginPage> {
   Widget buildEmail() {
     return TextFormField(
       decoration: InputDecoration(
-          labelText: "Email",
+          labelText: "Correo Electronico",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide:

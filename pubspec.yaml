@@ -40,6 +40,7 @@ dependencies:
   google_sign_in:
   url_launcher:
   shared_preferences:
+  intl:
 
 
 dev_dependencies:
