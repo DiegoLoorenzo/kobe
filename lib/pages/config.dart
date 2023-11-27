@@ -5,6 +5,7 @@ import 'package:kobe_flutter/pages/configuration/privacy_policy.dart';
 import 'package:kobe_flutter/pages/configuration/help.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kobe_flutter/login/LoginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -105,11 +106,24 @@ class ConfigurationScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 46.0),
           child: ElevatedButton(
             onPressed: () async {
-              await _auth.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+              // await _auth.signOut();
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => LoginPage()),
+              // );
+
+              try {
+                await _auth.signOut();
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('user_email');
+                prefs.remove('user_uid');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              } catch (e) {
+                print('Error al cerrar la sesión: $e');
+              }
             },
             style: ElevatedButton.styleFrom(
               primary: Color(0xFFEA5C00),

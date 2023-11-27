@@ -115,13 +115,23 @@ class _LoginState extends State<LoginPage> {
   }
 
   Future<UserCredential> entrarConGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? authentication =
-        await googleUser?.authentication;
-    final credentials = GoogleAuthProvider.credential(
-        accessToken: authentication?.accessToken,
-        idToken: authentication?.idToken);
-    return await FirebaseAuth.instance.signInWithCredential(credentials);
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        print("Inicio de sesión con Google cancelado.");
+        return Future.error("Inicio de sesión con Google cancelado.");
+      }
+
+      final GoogleSignInAuthentication? authentication =
+          await googleUser.authentication;
+      final credentials = GoogleAuthProvider.credential(
+          accessToken: authentication?.accessToken,
+          idToken: authentication?.idToken);
+      return await FirebaseAuth.instance.signInWithCredential(credentials);
+    } catch (e) {
+      print("Error durante el inicio de sesión con Google: $e");
+      return Future.error("Error durante el inicio de sesión con Google");
+    }
   }
 
   Widget buildOrLine() {
