@@ -35,11 +35,24 @@ class _PoliticaPrivacidadState extends State<PoliticaPrivacidad>{
             textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 24,
               fontFamily: 'Poppins',fontWeight: FontWeight.w700,height: 0),),
           ),
+          SelectableText.rich(
+          TextSpan(
+            style: TextStyle(fontSize: 20),
+            children:[
+            TextSpan(text: "Hola esto es Datogedon"),
+            TextSpan(text: "Y usted qeu esta haciendo ")
+          ]
+      )
+    )
+
         ],
       ),
       )
     );
   }
+
+
+
 }
 
 

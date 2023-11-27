@@ -235,6 +235,7 @@ class _LoginState extends State<LoginPage> {
 
   Widget buildPassword() {
     return TextFormField(
+      maxLength: 10,
       obscureText: passwordVisible,
       decoration: InputDecoration(
         border: OutlineInputBorder(

@@ -132,6 +132,7 @@ class _CreateUserState extends State<CreateUserPage> {
   //Campo de la contraseña
   Widget buildPasswordFormField() {
     return TextFormField(
+      maxLength: 10,
       obscureText: passwordVisible,
       decoration: InputDecoration(
         labelText: "Contraseña",
