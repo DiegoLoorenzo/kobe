@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CommentsScreen extends StatelessWidget {
-  // Dirección de correo electrónico donde se enviarán los comentarios
-  // Método para abrir la aplicación de correo electrónico con los comentarios
-  void _sendEmail(String comments) async {
+  // Controlador para obtener el texto del TextField
+  final TextEditingController _controller = TextEditingController();
+
+  // Abir app de correo electrónico desde comentarios
+  void _sendEmail(BuildContext context, String comments) async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'diegolorenzomendez@gmail.com',
@@ -12,14 +15,35 @@ class CommentsScreen extends StatelessWidget {
     );
 
     final String emailLaunchUriString = emailLaunchUri.toString();
-
+    //Mensaje por si no se abre la aplicación
     if (await canLaunch(emailLaunchUriString)) {
       await launch(emailLaunchUriString);
     } else {
-      throw 'No se pudo abrir la aplicación de correo electrónico.';
+      print('No se pudo abrir la aplicación de correo electrónico.');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('No se pudo abrir la aplicación de correo electrónico'),
+            content: Text(
+                'Por favor, copia y pega este correo electrónico para enviar tus comentarios: diegolorenzomendez@gmail.com'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Copiar'),
+                onPressed: () {
+                  Clipboard.setData(
+                      new ClipboardData(text: 'diegolorenzomendez@gmail.com'));
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
+  //Interfaz de Mensajes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +65,7 @@ class CommentsScreen extends StatelessWidget {
             SizedBox(height: 10),
             Expanded(
               child: TextField(
+                controller: _controller,
                 maxLines: null,
                 expands: true,
                 decoration: InputDecoration(
@@ -52,10 +77,8 @@ class CommentsScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Obtener el texto de los comentarios del TextField
-                String userComments =
-                    "Texto de los comentarios"; // Reemplazar con el valor del TextField
-                _sendEmail(userComments);
+                String userComments = _controller.text;
+                _sendEmail(context, userComments);
               },
               child: Text('Enviar Comentarios'),
             ),
