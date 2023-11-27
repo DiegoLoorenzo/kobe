@@ -23,7 +23,6 @@ class _CreateUserState extends State<CreateUserPage> {
     passwordVisible = true;
   }
 
-  ///Almacenamiento de todos los Build y diseño de la interfaz
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +106,7 @@ class _CreateUserState extends State<CreateUserPage> {
         ));
   }
 
-  //Campo del Email
+  //Campo del Correo Electronico
   Widget buildEmailFormField() {
     return TextFormField(
       decoration: InputDecoration(
@@ -130,7 +129,7 @@ class _CreateUserState extends State<CreateUserPage> {
     );
   }
 
-//Campo de la contraseña
+  //Campo de la contraseña
   Widget buildPasswordFormField() {
     return TextFormField(
       obscureText: passwordVisible,
@@ -210,7 +209,6 @@ class _CreateUserState extends State<CreateUserPage> {
               UserCredential? userCredential = await crear(email, password);
               if (userCredential != null && userCredential.user != null) {
                 await userCredential.user!.sendEmailVerification();
-                // Limpiar el campo de error para que no se muestre después del éxito.
                 setState(() {
                   error = '';
                 });
@@ -239,9 +237,6 @@ class _CreateUserState extends State<CreateUserPage> {
 
   // Manejar los formatos del email
   bool isValidEmail(String email) {
-    // Aquí debes implementar la lógica para validar el formato del correo electrónico.
-    // Puedes utilizar expresiones regulares o cualquier otra lógica que prefieras.
-    // Aquí hay un ejemplo básico utilizando una expresión regular para verificar el formato del correo electrónico.
     final emailRegExp =
         RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
     return emailRegExp.hasMatch(email);
@@ -267,13 +262,13 @@ class _CreateUserState extends State<CreateUserPage> {
           error = AppLocalizations.translate('createUserError');
         });
       }
-      return null; // Importante: devolver null en caso de error.
+      return null;
     } catch (e) {
       print(e.toString());
       setState(() {
         error = AppLocalizations.translate('createUserError');
       });
-      return null; // Importante: devolver null en caso de error.
+      return null;
     }
   }
 }
