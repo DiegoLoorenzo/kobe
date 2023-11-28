@@ -15,17 +15,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  bool passwordVisible = true;
+  bool passwordVisible = false;
   String email = '', password = '';
   final _formkey = GlobalKey<FormState>();
   String error = '';
 
-  Map<String, String> mensajesErrorPersonalizados = {
-    'user-not-found': 'Usuario no encontrado',
-    'wrong-password': 'Contraseña incorrecta',
-    'invalid-email': 'Correo Electronico Incorrecto',
-    'INVALID_LOGIN_CREDENTIALS': 'Contraseña Incorrecta',
-  };
+  @override
+  void initState() {
+    super.initState();
+    // Verifica si el usuario ya ha iniciado sesión al abrir la página de inicio de sesión
+    checkLoggedIn();
+  }
+
+  Future<void> checkLoggedIn() async {
+    if (await isUserLoggedIn()) {
+      // Si el usuario ya ha iniciado sesión, redirige a la página principal
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+    }
+  }
 
   Future<bool> isUserLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,65 +46,51 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: isUserLoggedIn(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.data == true) {
-            // Si hay una sesión iniciada
-            return MyHomePage();
-          } else {
-            return Scaffold(
-              body: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(80.0),
-                      child: Image.asset('assets/icon250.png'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Text(
-                        "Bienvenido a K.O.B.E",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 30,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                          height: -1,
-                        ),
-                      ),
-                    ),
-                    Offstage(
-                      offstage: error == '',
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          error,
-                          style: TextStyle(color: Colors.red, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: formulario(),
-                    ),
-                    butonLogin(),
-                    nuevoAqui(),
-                    forgetpassword(),
-                    buildOrLine(),
-                    BotonGoogle(),
-                  ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Image.asset('assets/icon250.png'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Text(
+                "Bienvenido a K.O.B.E",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 30,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  height: -1,
                 ),
               ),
-            );
-          }
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
+            ),
+            Offstage(
+              offstage: error == '',
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: formulario(),
+            ),
+            butonLogin(),
+            nuevoAqui(),
+            forgetpassword(),
+            buildOrLine(),
+            BotonGoogle(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -115,13 +111,23 @@ class _LoginState extends State<LoginPage> {
   }
 
   Future<UserCredential> entrarConGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? authentication =
-        await googleUser?.authentication;
-    final credentials = GoogleAuthProvider.credential(
-        accessToken: authentication?.accessToken,
-        idToken: authentication?.idToken);
-    return await FirebaseAuth.instance.signInWithCredential(credentials);
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        print("Inicio de sesión con Google cancelado.");
+        return Future.error("Inicio de sesión con Google cancelado.");
+      }
+
+      final GoogleSignInAuthentication? authentication =
+          await googleUser.authentication;
+      final credentials = GoogleAuthProvider.credential(
+          accessToken: authentication?.accessToken,
+          idToken: authentication?.idToken);
+      return await FirebaseAuth.instance.signInWithCredential(credentials);
+    } catch (e) {
+      print("Error durante el inicio de sesión con Google: $e");
+      return Future.error("Error durante el inicio de sesión con Google");
+    }
   }
 
   Widget buildOrLine() {
@@ -205,7 +211,7 @@ class _LoginState extends State<LoginPage> {
   Widget buildEmail() {
     return TextFormField(
       decoration: InputDecoration(
-          labelText: "Email",
+          labelText: "Correo Electronico",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide:
@@ -225,11 +231,13 @@ class _LoginState extends State<LoginPage> {
 
   Widget buildPassword() {
     return TextFormField(
-      obscureText: passwordVisible,
+      maxLength: 20,
+      obscureText: !passwordVisible,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.black)),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.black),
+        ),
         hintText: 'Contraseña',
         suffixIcon: IconButton(
           icon: Icon(passwordVisible ? Icons.visibility_off : Icons.visibility  ),
@@ -265,6 +273,13 @@ class _LoginState extends State<LoginPage> {
             if (credentials != null) {
               if (credentials.user != null) {
                 if (credentials.user!.emailVerified) {
+                  // Guardar información del usuario en SharedPreferences
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setString('user_email', credentials.user!.email ?? '');
+                  prefs.setString('user_uid', credentials.user!.uid ?? '');
+
+                  // Redirigir a la página principal
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => MyHomePage()),
@@ -290,22 +305,20 @@ class _LoginState extends State<LoginPage> {
     );
   }
 
-  //Metodo login
   Future<UserCredential?> login(String email, String passwd) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: passwd);
-      if (userCredential.user != null) {
-        // Guardar información del usuario en SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('user_email', userCredential.user!.email ?? '');
-        prefs.setString('user_uid', userCredential.user!.uid ?? '');
-      }
-
       return userCredential;
     } on FirebaseException catch (e) {
       setState(() {
-        error = mensajesErrorPersonalizados[e.code] ?? '${e.code}';
+        if (e.code == 'user-not-found') {
+          error = "Usuario no encontrado";
+        } else if (e.code == 'wrong-password') {
+          error = "Contraseña incorrecta";
+        } else {
+          error = "Ocurrió un error: ${e.code}";
+        }
       });
       return null;
     }

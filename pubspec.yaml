@@ -42,6 +42,7 @@ dependencies:
 
   url_launcher:
   shared_preferences:
+  intl:
 
 
 dev_dependencies:

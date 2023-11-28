@@ -22,9 +22,10 @@ class HelpScreen extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               _buildHelpTile(
-                question: '¿Cómo cambio mi contraseña?',
+                question: '¿Porque no puedo enviar comentarios?',
                 answer:
-                    'Puedes cambiar tu contraseña desde la pantalla de perfil. Ve a Configuración > Perfil y encontrarás la opción para cambiar tu contraseña.',
+                    'Puede ser que no tengas una aplicación de correo electronico predeterminada, sigue estos pasos para solucionar el problema:\n\n'
+                    'Abre los ‘Ajustes’ > Aplicaciones > Administrar aplicaciones > Aplicaciones Predeterminadas > Aplicación de correo electrónico.',
               ),
               _buildHelpTile(
                 question: '¿Cómo envío comentarios sobre la aplicación?',
