@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:kobe_flutter/pages/juegos/juegos_view.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
 import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page_dos.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page_tres.dart';
 import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
-=======
-import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
-import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
->>>>>>> ebd6b48d0b905367f3c55aed045e4da45c072b73
+
 
 class juegos extends StatefulWidget {
 
