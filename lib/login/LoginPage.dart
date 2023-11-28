@@ -232,7 +232,7 @@ class _LoginState extends State<LoginPage> {
             borderSide: BorderSide(color: Colors.black)),
         hintText: 'Contraseña',
         suffixIcon: IconButton(
-          icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+          icon: Icon(passwordVisible ? Icons.visibility_off : Icons.visibility  ),
           onPressed: () {
             setState(() {
               passwordVisible = !passwordVisible;
