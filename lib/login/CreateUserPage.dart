@@ -11,7 +11,7 @@ class CreateUserPage extends StatefulWidget {
 }
 
 class _CreateUserState extends State<CreateUserPage> {
-  bool passwordVisible = true;
+  bool passwordVisible = false;
   late String email, password;
   final _formkey = GlobalKey<FormState>();
   String error = '';
@@ -133,7 +133,7 @@ class _CreateUserState extends State<CreateUserPage> {
   Widget buildPasswordFormField() {
     return TextFormField(
       maxLength: 20,
-      obscureText: passwordVisible,
+      obscureText: !passwordVisible,
       decoration: InputDecoration(
         labelText: "Contraseña",
         border: OutlineInputBorder(
@@ -149,6 +149,8 @@ class _CreateUserState extends State<CreateUserPage> {
           },
         ),
       ),
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.done,
       validator: (value) {
         if (value!.isEmpty) {
           return "Este campo es obligatorio";
