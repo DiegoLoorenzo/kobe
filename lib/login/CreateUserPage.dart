@@ -132,7 +132,7 @@ class _CreateUserState extends State<CreateUserPage> {
   //Campo de la contraseña
   Widget buildPasswordFormField() {
     return TextFormField(
-      maxLength: 10,
+      maxLength: 20,
       obscureText: passwordVisible,
       decoration: InputDecoration(
         labelText: "Contraseña",
@@ -152,8 +152,8 @@ class _CreateUserState extends State<CreateUserPage> {
       validator: (value) {
         if (value!.isEmpty) {
           return "Este campo es obligatorio";
-        } else if (value.length < 6 || value.length > 20) {
-          return "La longitud de la contraseña debe estar entre 6 y 20 caracteres";
+        } else if (value.length < 12 || value.length > 20) {
+          return "La longitud de la contraseña debe estar entre 12 y 20 caracteres";
         }
         return null;
       },
