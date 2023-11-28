@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
+import 'package:kobe_flutter/pages/juegos/start_view.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
+import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
+import 'package:kobe_flutter/pages/juegos/pages/quiz_page_dos.dart';
+import 'package:kobe_flutter/pages/juegos/pages/quiz_page_tres.dart';
+import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
 
 class juegos extends StatefulWidget {
   const juegos({super.key});
@@ -14,7 +18,7 @@ class _juegos extends State<juegos> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: '¿Listo para Jugar?',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
           textTheme: TextTheme(
@@ -47,12 +51,16 @@ class _juegos extends State<juegos> {
             ),
           ),
         ),
-        initialRoute: '/',
+        initialRoute: '/juegos-view',
         routes: {
-          '/': (context) => const elegir_tema(),
+          // '/': (context) => const juegos(),
+          '/elegir-tema': (context) => const elegir_tema(),
           '/quiz-page': (context) => const QuizPage(),
+          '/quiz-page-dos': (context) => const QuizPageDos(),
+          '/quiz-page-tres': (context) => const QuizPageTres(),
+          '/juegos-view': (context) => const start_view(),
+          //'/regresar': (context) => const regresar(),
           //'/review-page': (context) => const ReviewQuizPage(),
         });
-    ;
   }
 }

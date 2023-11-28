@@ -3,7 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:kobe_flutter/pages/Biblioteca/biblioteca.dart';
 import 'package:kobe_flutter/pages/Recetas/recetas.dart';
 import 'package:kobe_flutter/pages/inicio.dart';
-import 'package:kobe_flutter/pages/juegos/start_view.dart';
+import 'package:kobe_flutter/pages/juegos/juegos.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -29,7 +29,7 @@ class _MyHomePage extends State<MyHomePage> {
           inicio(),
           Recetas(),
           biblioteca(),
-          start_view(),
+          juegos(),
         ],
       ),
 

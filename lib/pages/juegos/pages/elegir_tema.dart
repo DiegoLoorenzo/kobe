@@ -55,7 +55,7 @@ class _elegir_tema extends State<elegir_tema> {
           ),
           OutlinedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/quiz-page');
+              Navigator.pushNamed(context, '/quiz-page-dos');
             },
             child: const Text('Tema 2'),
             style: OutlinedButton.styleFrom(
@@ -69,9 +69,23 @@ class _elegir_tema extends State<elegir_tema> {
           ),
           OutlinedButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/quiz-page');
+              Navigator.pushNamed(context, '/quiz-page-tres');
             },
             child: const Text('Tema 3'),
+            style: OutlinedButton.styleFrom(
+              primary: Colors.black,
+              backgroundColor: Theme
+                  .of(context)
+                  .primaryColorLight,
+              elevation: 4,
+              side: const BorderSide(width: 1),
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/juegos-view');
+            },
+            child: const Text('Regresar'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
               backgroundColor: Theme

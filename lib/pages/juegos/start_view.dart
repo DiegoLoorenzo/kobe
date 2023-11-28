@@ -49,10 +49,7 @@ class _start_view extends State<start_view> {
             SizedBox(height: 40.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => juegos()),
-                );
+                Navigator.pushNamed(context, '/elegir-tema');
               },
               style: ElevatedButton.styleFrom(
                 primary: Color.fromRGBO(242, 157, 102, 1),
