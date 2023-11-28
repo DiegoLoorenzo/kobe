@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kobe_flutter/MyHomePage.dart';
+import 'package:kobe_flutter/main.dart';
+import 'package:kobe_flutter/pages/inicio.dart';
 import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
+import 'package:kobe_flutter/pages/juegos/juegos.dart';
+import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
 
 class ResultsPage extends StatelessWidget {
   const ResultsPage({Key? key, required this.quiz}) : super(key: key);
@@ -20,7 +25,7 @@ class ResultsPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               margin:
-              const EdgeInsets.only(left: 3, right: 3, top: 2, bottom: 10),
+                  const EdgeInsets.only(left: 3, right: 3, top: 2, bottom: 10),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.indigo.shade50,
@@ -60,6 +65,18 @@ class ResultsPage extends StatelessWidget {
                       ),
                     );
                   }),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => juegos()),
+                );
+              },
+              child: Text(
+                'Regresar',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           ],
         ),
