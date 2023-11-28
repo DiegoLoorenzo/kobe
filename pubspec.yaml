@@ -33,16 +33,21 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth:
   firebase_core:
+
   flutter:
     sdk: flutter
   flutter_signin_button:
   google_nav_bar: ^5.0.6
   google_sign_in:
+
   url_launcher:
   shared_preferences:
+
   firebase_storage:
   file_picker:
   easy_pdf_viewer:
+
+  intl:
 
 
 dev_dependencies:
