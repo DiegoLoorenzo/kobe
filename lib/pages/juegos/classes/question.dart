@@ -1,6 +1,6 @@
 class Question {
   late String country;
-  String question = "Capital de: ";
+  String question = "Tema 1: ";
   late String answer;
   List<String> options = [];
   String selected = 'Skipped';
