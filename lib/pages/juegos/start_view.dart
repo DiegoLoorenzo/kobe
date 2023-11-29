@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/juegos/juegos.dart';
+
 
 class start_view extends StatefulWidget {
   const start_view({super.key});

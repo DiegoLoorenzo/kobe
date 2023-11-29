@@ -106,6 +106,12 @@ class ConfigurationScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 46.0),
           child: ElevatedButton(
             onPressed: () async {
+              // await _auth.signOut();
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => LoginPage()),
+              // );
+
               try {
                 await _auth.signOut();
                 SharedPreferences prefs = await SharedPreferences.getInstance();
