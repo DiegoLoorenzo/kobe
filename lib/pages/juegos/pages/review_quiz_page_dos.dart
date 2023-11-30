@@ -5,14 +5,14 @@ import 'package:kobe_flutter/pages/juegos/classes/question.dart';
 import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
 
 
-class ReviewQuizPage extends StatefulWidget {
-  const ReviewQuizPage({Key? key}) : super(key: key);
+class ReviewQuizPageDos extends StatefulWidget {
+  const ReviewQuizPageDos({Key? key}) : super(key: key);
 
   @override
-  State<ReviewQuizPage> createState() => _ReviewQuizPageState();
+  State<ReviewQuizPageDos> createState() => _ReviewQuizPageState();
 }
 
-class _ReviewQuizPageState extends State<ReviewQuizPage> {
+class _ReviewQuizPageState extends State<ReviewQuizPageDos> {
   Quiz quiz = Quiz(name: 'Quiz de Capitales', questions: []);
 
   Future<void> readJson() async {
