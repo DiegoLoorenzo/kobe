@@ -44,6 +44,10 @@ dependencies:
   shared_preferences:
   intl:
 
+  firebase_storage:
+  file_picker:
+  easy_pdf_viewer:
+
 
 dev_dependencies:
   flutter_launcher_icons:

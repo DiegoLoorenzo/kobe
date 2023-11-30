@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/Politica_de_Privacidad.dart';
 import 'package:kobe_flutter/login/i18n.dart';
+import 'package:kobe_flutter/pages/Politica_de_Privacidad.dart';
 
 class CreateUserPage extends StatefulWidget {
   @override
