@@ -72,7 +72,7 @@ class ResultsPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => juegos()),
+                      builder: (context) => MyHomePage()),
                 );
               },
               child: Text(
