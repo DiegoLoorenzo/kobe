@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kobe_flutter/pages/juegos/classes/question.dart';
-import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
-import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
+import 'package:kobe_flutter/pages/juegos/classes/question_tres.dart';
+import 'package:kobe_flutter/pages/juegos/classes/quiz_tres.dart';
+import 'package:kobe_flutter/pages/juegos/pages/results_page_tres.dart';
 
 class QuizPageTres extends StatefulWidget {
   const QuizPageTres({Key? key}) : super(key: key);
@@ -17,10 +17,10 @@ class _QuizPageState extends State<QuizPageTres> {
   int totalOptions = 4;
   int questionIndex = 0;
   int progressIndex = 0;
-  Quiz quiz = Quiz(name: 'Quiz de Capitales', questions: []);
+  QuizTres quiz = QuizTres(name: 'Quiz de Gastronomia Tema 3', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-3.json');
     final List<dynamic> data = await json.decode(response);
     List<int> optionList = List<int>.generate(data.length, (i) => i);
     List<int> questionsAdded = [];
@@ -33,10 +33,10 @@ class _QuizPageState extends State<QuizPageTres> {
 
       List<String> otherOptions = [];
       for (var option in optionList.sublist(1, totalOptions)) {
-        otherOptions.add(data[option]['capital']);
+        otherOptions.add(data[option]['pregunta']);
       }
 
-      Question question = Question.fromJson(data[answer]);
+      QuestionTres question = QuestionTres.fromJson(data[answer]);
       question.addOptions(otherOptions);
       quiz.questions.add(question);
 
@@ -105,7 +105,7 @@ class _QuizPageState extends State<QuizPageTres> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: ((context) => ResultsPage(
+                  builder: ((context) => ResultsPageTres(
                     quiz: quiz,
                   ))),
             );
@@ -154,7 +154,7 @@ class _QuizPageState extends State<QuizPageTres> {
                     Container(
                       margin: const EdgeInsets.all(15),
                       child: Text(
-                        quiz.questions[questionIndex].question,
+                        quiz.questions[questionIndex].questionTres,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
-import 'package:kobe_flutter/main.dart';
-import 'package:kobe_flutter/pages/inicio.dart';
-import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
 import 'package:kobe_flutter/pages/juegos/classes/quiz_dos.dart';
-import 'package:kobe_flutter/pages/juegos/juegos.dart';
-import 'package:kobe_flutter/pages/juegos/juegos_view.dart';
-import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
 
 class ResultsPageDos extends StatelessWidget {
   const ResultsPageDos({Key? key, required this.quiz}) : super(key: key);
@@ -61,7 +55,7 @@ class ResultsPageDos extends StatelessWidget {
                         leading: quiz.questions[index].correct
                             ? Icon(Icons.check, color: Colors.green.shade900)
                             : Icon(Icons.close, color: Colors.red.shade900),
-                        title: Text(quiz.questions[index].question),
+                        title: Text(quiz.questions[index].questionDos),
                         subtitle: Text(quiz.questions[index].selected),
                         trailing: Text(quiz.questions[index].answer),
                       ),

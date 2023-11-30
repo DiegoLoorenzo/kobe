@@ -1,4 +1,3 @@
-import 'package:kobe_flutter/pages/juegos/classes/question.dart';
 import 'package:kobe_flutter/pages/juegos/classes/question_dos.dart';
 
 class QuizDos {

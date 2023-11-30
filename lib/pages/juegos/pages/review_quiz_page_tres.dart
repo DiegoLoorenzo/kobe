@@ -1,27 +1,27 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kobe_flutter/pages/juegos/classes/question_dos.dart';
-import 'package:kobe_flutter/pages/juegos/classes/quiz_dos.dart';
+import 'package:kobe_flutter/pages/juegos/classes/question_tres.dart';
+import 'package:kobe_flutter/pages/juegos/classes/quiz_tres.dart';
 
 
-class ReviewQuizPageDos extends StatefulWidget {
-  const ReviewQuizPageDos({Key? key}) : super(key: key);
+class ReviewQuizPageTres extends StatefulWidget {
+  const ReviewQuizPageTres({Key? key}) : super(key: key);
 
   @override
-  State<ReviewQuizPageDos> createState() => _ReviewQuizPageState();
+  State<ReviewQuizPageTres> createState() => _ReviewQuizPageState();
 }
 
-class _ReviewQuizPageState extends State<ReviewQuizPageDos> {
-  QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia Tema 2', questions: []);
+class _ReviewQuizPageState extends State<ReviewQuizPageTres> {
+  QuizTres quiz = QuizTres(name: 'Quiz de Gastronomia Tema 3', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-3.json');
     final List<dynamic> data = await json.decode(response);
     for (var item in data) {
-      QuestionDos questionDos = QuestionDos.fromJson(item);
-      questionDos.questionDos += questionDos.pregunta;
-      quiz.questions.add(questionDos);
+      QuestionTres questionTres = QuestionTres.fromJson(item);
+      questionTres.questionTres += questionTres.pregunta;
+      quiz.questions.add(questionTres);
     }
     setState(() {});
   }
@@ -67,7 +67,7 @@ class _ReviewQuizPageState extends State<ReviewQuizPageDos> {
                       color: Theme.of(context).primaryColorLight,
                       child: ListTile(
                         leading: Text("${index + 1}"),
-                        title: Text(quiz.questions[index].questionDos),
+                        title: Text(quiz.questions[index].questionTres),
                         trailing: Text(quiz.questions[index].answer),
                       ),
                     );

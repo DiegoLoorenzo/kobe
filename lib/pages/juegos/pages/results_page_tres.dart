@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
-import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
+import 'package:kobe_flutter/pages/juegos/classes/quiz_tres.dart';
 
-class ResultsPage extends StatelessWidget {
-  const ResultsPage({Key? key, required this.quiz}) : super(key: key);
-  final Quiz quiz;
+class ResultsPageTres extends StatelessWidget {
+  const ResultsPageTres({Key? key, required this.quiz}) : super(key: key);
+  final QuizTres quiz;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class ResultsPage extends StatelessWidget {
                         leading: quiz.questions[index].correct
                             ? Icon(Icons.check, color: Colors.green.shade900)
                             : Icon(Icons.close, color: Colors.red.shade900),
-                        title: Text(quiz.questions[index].question),
+                        title: Text(quiz.questions[index].questionTres),
                         subtitle: Text(quiz.questions[index].selected),
                         trailing: Text(quiz.questions[index].answer),
                       ),

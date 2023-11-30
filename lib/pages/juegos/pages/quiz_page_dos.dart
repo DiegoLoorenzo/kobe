@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kobe_flutter/pages/juegos/classes/question.dart';
 import 'package:kobe_flutter/pages/juegos/classes/question_dos.dart';
-import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
 import 'package:kobe_flutter/pages/juegos/classes/quiz_dos.dart';
-import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
 import 'package:kobe_flutter/pages/juegos/pages/results_page_dos.dart';
 
 class QuizPageDos extends StatefulWidget {
@@ -20,7 +17,7 @@ class _QuizPageState extends State<QuizPageDos> {
   int totalOptions = 4;
   int questionIndex = 0;
   int progressIndex = 0;
-  QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia', questions: []);
+  QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia Tema 2', questions: []);
 
   Future<void> readJson() async {
     final String response = await rootBundle.loadString('assets/tema-2.json');
@@ -157,7 +154,7 @@ class _QuizPageState extends State<QuizPageDos> {
                     Container(
                       margin: const EdgeInsets.all(15),
                       child: Text(
-                        quiz.questions[questionIndex].question,
+                        quiz.questions[questionIndex].questionDos,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
