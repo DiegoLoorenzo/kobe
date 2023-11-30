@@ -1,9 +1,10 @@
 import 'package:intl/intl.dart';
 
+
 //Son mensajes de error convertidos en Español
 class AppLocalizations {
   static String translate(String errorCode, {String? locale}) {
-    locale ??= Intl.defaultLocale;
+    locale ??= Intl.defaultLocale; //Intl.defaultLocale
     switch (errorCode) {
       case 'email-already-in-use':
         return Intl.message(

@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  intl:
   cached_network_image:
   cloud_firestore:
   cupertino_icons: ^1.0.2
@@ -41,8 +42,10 @@ dependencies:
 
   url_launcher:
   shared_preferences:
-  intl:
 
+  firebase_storage:
+  file_picker:
+  easy_pdf_viewer:
 
 dev_dependencies:
   flutter_launcher_icons:
