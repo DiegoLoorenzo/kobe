@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kobe_flutter/pages/juegos/classes/question.dart';
+import 'package:kobe_flutter/pages/juegos/classes/question_dos.dart';
 import 'package:kobe_flutter/pages/juegos/classes/quiz.dart';
+import 'package:kobe_flutter/pages/juegos/classes/quiz_dos.dart';
 import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
+import 'package:kobe_flutter/pages/juegos/pages/results_page_dos.dart';
 
 class QuizPageDos extends StatefulWidget {
   const QuizPageDos({Key? key}) : super(key: key);
@@ -17,10 +20,10 @@ class _QuizPageState extends State<QuizPageDos> {
   int totalOptions = 4;
   int questionIndex = 0;
   int progressIndex = 0;
-  Quiz quiz = Quiz(name: 'Quiz de Capitales', questions: []);
+  QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-2.json');
     final List<dynamic> data = await json.decode(response);
     List<int> optionList = List<int>.generate(data.length, (i) => i);
     List<int> questionsAdded = [];
@@ -33,10 +36,10 @@ class _QuizPageState extends State<QuizPageDos> {
 
       List<String> otherOptions = [];
       for (var option in optionList.sublist(1, totalOptions)) {
-        otherOptions.add(data[option]['capital']);
+        otherOptions.add(data[option]['pregunta']);
       }
 
-      Question question = Question.fromJson(data[answer]);
+      QuestionDos question = QuestionDos.fromJson(data[answer]);
       question.addOptions(otherOptions);
       quiz.questions.add(question);
 
@@ -105,7 +108,7 @@ class _QuizPageState extends State<QuizPageDos> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: ((context) => ResultsPage(
+                  builder: ((context) => ResultsPageDos(
                     quiz: quiz,
                   ))),
             );
