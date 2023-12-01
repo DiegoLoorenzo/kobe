@@ -16,7 +16,7 @@ class _ReviewQuizPageState extends State<ReviewQuizPageDos> {
   QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia Tema 2', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-2.json');
     final List<dynamic> data = await json.decode(response);
     for (var item in data) {
       QuestionDos questionDos = QuestionDos.fromJson(item);

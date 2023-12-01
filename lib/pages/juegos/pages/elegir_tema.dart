@@ -43,7 +43,7 @@ class _elegir_tema extends State<elegir_tema> {
             onPressed: () {
               Navigator.pushNamed(context, '/quiz-page');
             },
-            child: const Text('Tema 1'),
+            child: const Text('Tema 1 - Cortes'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
               backgroundColor: Theme
@@ -57,7 +57,7 @@ class _elegir_tema extends State<elegir_tema> {
             onPressed: () {
               Navigator.pushNamed(context, '/quiz-page-dos');
             },
-            child: const Text('Tema 2'),
+            child: const Text('Tema 2 - Métodos y técnicas de cocina'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
               backgroundColor: Theme
@@ -71,7 +71,7 @@ class _elegir_tema extends State<elegir_tema> {
             onPressed: () {
               Navigator.pushNamed(context, '/quiz-page-tres');
             },
-            child: const Text('Tema 3'),
+            child: const Text('Tema 3 - Equipo mayor, menor y utensilios'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
               backgroundColor: Theme

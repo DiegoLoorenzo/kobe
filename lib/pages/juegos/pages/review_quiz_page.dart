@@ -13,14 +13,14 @@ class ReviewQuizPage extends StatefulWidget {
 }
 
 class _ReviewQuizPageState extends State<ReviewQuizPage> {
-  Quiz quiz = Quiz(name: 'Quiz de Capitales', questions: []);
+  Quiz quiz = Quiz(name: 'Quiz de Gastronomia Tema 1', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-1.json');
     final List<dynamic> data = await json.decode(response);
     for (var item in data) {
       Question question = Question.fromJson(item);
-      question.question += question.country;
+      question.question += question.pregunta;
       quiz.questions.add(question);
     }
     setState(() {});

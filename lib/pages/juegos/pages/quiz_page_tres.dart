@@ -14,7 +14,7 @@ class QuizPageTres extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPageTres> {
   int totalQuestions = 5;
-  int totalOptions = 4;
+  int totalOptions = 3;
   int questionIndex = 0;
   int progressIndex = 0;
   QuizTres quiz = QuizTres(name: 'Quiz de Gastronomia Tema 3', questions: []);
@@ -33,7 +33,7 @@ class _QuizPageState extends State<QuizPageTres> {
 
       List<String> otherOptions = [];
       for (var option in optionList.sublist(1, totalOptions)) {
-        otherOptions.add(data[option]['pregunta']);
+        otherOptions.add(data[option]['respuesta']);
       }
 
       QuestionTres question = QuestionTres.fromJson(data[answer]);
@@ -209,7 +209,7 @@ class _QuizPageState extends State<QuizPageTres> {
             onPressed: () {
               _optionSelected('Skipped');
             },
-            child: Text('Skip', style: Theme.of(context).textTheme.bodyText1),
+            child: Text('Saltar', style: Theme.of(context).textTheme.bodyText1),
           ),
         ],
       ),

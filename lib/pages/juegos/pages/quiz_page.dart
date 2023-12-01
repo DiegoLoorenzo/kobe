@@ -14,13 +14,13 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int totalQuestions = 5;
-  int totalOptions = 4;
+  int totalOptions = 3;
   int questionIndex = 0;
   int progressIndex = 0;
-  Quiz quiz = Quiz(name: 'Quiz de Capitales', questions: []);
+  Quiz quiz = Quiz(name: 'Quiz de Gastronomia Tema 1', questions: []);
 
   Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/paises.json');
+    final String response = await rootBundle.loadString('assets/tema-1.json');
     final List<dynamic> data = await json.decode(response);
     List<int> optionList = List<int>.generate(data.length, (i) => i);
     List<int> questionsAdded = [];
@@ -33,7 +33,7 @@ class _QuizPageState extends State<QuizPage> {
 
       List<String> otherOptions = [];
       for (var option in optionList.sublist(1, totalOptions)) {
-        otherOptions.add(data[option]['capital']);
+        otherOptions.add(data[option]['respuesta']);
       }
 
       Question question = Question.fromJson(data[answer]);
@@ -209,7 +209,7 @@ class _QuizPageState extends State<QuizPage> {
             onPressed: () {
               _optionSelected('Skipped');
             },
-            child: Text('Skip', style: Theme.of(context).textTheme.bodyText1),
+            child: Text('Saltar', style: Theme.of(context).textTheme.bodyText1),
           ),
         ],
       ),

@@ -14,7 +14,7 @@ class QuizPageDos extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPageDos> {
   int totalQuestions = 5;
-  int totalOptions = 4;
+  int totalOptions = 3;
   int questionIndex = 0;
   int progressIndex = 0;
   QuizDos quiz = QuizDos(name: 'Quiz de Gastronomia Tema 2', questions: []);
@@ -33,7 +33,7 @@ class _QuizPageState extends State<QuizPageDos> {
 
       List<String> otherOptions = [];
       for (var option in optionList.sublist(1, totalOptions)) {
-        otherOptions.add(data[option]['pregunta']);
+        otherOptions.add(data[option]['respuesta']);
       }
 
       QuestionDos question = QuestionDos.fromJson(data[answer]);
@@ -209,7 +209,7 @@ class _QuizPageState extends State<QuizPageDos> {
             onPressed: () {
               _optionSelected('Skipped');
             },
-            child: Text('Skip', style: Theme.of(context).textTheme.bodyText1),
+            child: Text('Saltar', style: Theme.of(context).textTheme.bodyText1),
           ),
         ],
       ),

@@ -1,5 +1,5 @@
 class Question {
-  late String country;
+  late String pregunta;
   String question = "Tema 1: ";
   late String answer;
   List<String> options = [];
@@ -7,11 +7,11 @@ class Question {
   bool correct = false;
 
   Question.fromJson(Map<String, dynamic> json)
-      : country = json['country'],
-        answer = json['capital'];
+      : pregunta = json['pregunta'],
+        answer = json['respuesta'];
 
   void addOptions(List<String> newOptions) {
-    question += country;
+    question += pregunta;
     options.add(answer);
     options.addAll(newOptions);
     options.shuffle();
