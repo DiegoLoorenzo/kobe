@@ -1,6 +1,4 @@
-import 'package:kobe_flutter/auth/LoginPage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Recetas extends StatefulWidget {
   const Recetas({Key? key}) : super(key: key);

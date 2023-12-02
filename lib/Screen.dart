@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/auth/LoginPage.dart';
+import 'package:kobe_flutter/auth/login_page.dart';
 
 class Screen extends StatefulWidget {
   @override
