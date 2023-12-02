@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/login/LoginPage.dart';
+import 'package:kobe_flutter/auth/LoginPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

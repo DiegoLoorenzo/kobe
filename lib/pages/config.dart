@@ -4,7 +4,7 @@ import 'package:kobe_flutter/pages/configuration/comments.dart';
 import 'package:kobe_flutter/pages/configuration/privacy_policy.dart';
 import 'package:kobe_flutter/pages/configuration/help.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kobe_flutter/login/LoginPage.dart';
+import 'package:kobe_flutter/auth/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationScreen extends StatelessWidget {
