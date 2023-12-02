@@ -8,53 +8,65 @@ class juegos_view extends StatefulWidget {
 }
 
 class _juegos_view extends State<juegos_view> {
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(10),
-        children: [
-          Container(
-            height: 50,
-            margin: const EdgeInsets.only(top: 50, bottom: 25),
-            child: const Center(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromRGBO(255, 226, 151, 1),
+            Color.fromRGBO(255, 226, 151, 1),
+            Colors.white,
+          ],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/quiz.png',
+              height: 150.0,
+            ),
+            SizedBox(height: 60.0),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
               child: Text(
-                '¿Listo para Jugar?',
+                '¿Listo para empezar?',
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
+                  fontSize: 29.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.indigo.shade200,
-                      Colors.purple.shade300
-                    ]),
-                borderRadius: BorderRadius.circular(5)),
-          ),
-          OutlinedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/elegir-tema');
-            },
-            child: const Text('Comenzar'),
-            style: OutlinedButton.styleFrom(
-              primary: Colors.black,
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColorLight,
-              elevation: 4,
-              side: const BorderSide(width: 1),
+            SizedBox(height: 40.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/elegir-tema');
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromRGBO(242, 157, 102, 1),
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: Text(
+                'Empezar',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ),
-
-        ],
+          ],
+        ),
       ),
     );
   }
