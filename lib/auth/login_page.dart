@@ -15,6 +15,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+  Map<String, String> errorMessages = {
+    'user-not-found': 'Usuario no encontrado. Verifica tu correo electrónico.',
+    'wrong-password': 'Contraseña incorrecta. Por favor, intenta nuevamente.',
+    'The email address is badly formatted.':
+        'La dirección de correo electrónico tiene un formato incorrecto.',
+    'INVALID_LOGIN_CREDENTIALS': 'Credenciales de inicio de sesión inválidas.',
+    'We have blocked all requests from this device due to unusual activity. Try again later.':
+        'Hemos bloqueado todas las solicitudes desde este dispositivo debido a actividad inusual. Inténtalo de nuevo más tarde.',
+  };
   bool passwordVisible = false;
   String email = '', password = '';
   final _formkey = GlobalKey<FormState>();
@@ -310,16 +319,37 @@ class _LoginState extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: passwd);
       return userCredential;
-    } on FirebaseException catch (e) {
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage =
+              'Usuario no encontrado. Verifica tu correo electrónico.';
+          break;
+        case 'wrong-password':
+          errorMessage =
+              'Contraseña incorrecta. Por favor, intenta nuevamente.';
+          break;
+        case 'invalid-email':
+          errorMessage =
+              'La dirección de correo electrónico tiene un formato incorrecto.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'El usuario ha sido deshabilitado.';
+          break;
+        case 'INVALID_LOGIN_CREDENTIALS':
+          errorMessage = 'El correo o contraseña son incorrectos';
+          break;
+        // Agrega más casos según tus necesidades
+        default:
+          errorMessage = 'Ocurrió un error: ${e.message}';
+      }
+
       setState(() {
-        if (e.code == 'user-not-found') {
-          error = "Usuario no encontrado";
-        } else if (e.code == 'wrong-password') {
-          error = "Contraseña incorrecta";
-        } else {
-          error = "Ocurrió un error: ${e.code}";
-        }
+        error = errorMessage;
       });
+
       return null;
     }
   }
