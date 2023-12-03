@@ -12,6 +12,9 @@ class ConfigurationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = _auth.currentUser;
+    String userEmail = user?.email ?? 'Correo electrónico no disponible';
+
     return Scaffold(
       body: Stack(
         children: [
@@ -50,7 +53,7 @@ class ConfigurationScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 56),
                 _buildProfileInfo(
-                  email: 'tu_correo_electronico@gmail.com',
+                  email: userEmail,
                 ),
                 Divider(color: Colors.black),
                 SizedBox(height: 16),

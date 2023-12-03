@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/auth/i18n.dart';
-import 'package:kobe_flutter/pages/Politica_de_Privacidad.dart';
+import 'package:kobe_flutter/pages/configuration/privacy_policy.dart';
 import 'package:kobe_flutter/auth/login_page.dart';
 
 class CreateUserPage extends StatefulWidget {
@@ -250,7 +250,7 @@ class _CreateUserState extends State<CreateUserPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PoliticaPrivacidad()),
+              MaterialPageRoute(builder: (context) => PrivacyScreen()),
             );
           },
           child: Text(
