@@ -47,6 +47,7 @@ dependencies:
   firebase_storage:
   file_picker:
   easy_pdf_viewer:
+  flutter_speed_dial: ^7.0.0
 
 
 dev_dependencies:
