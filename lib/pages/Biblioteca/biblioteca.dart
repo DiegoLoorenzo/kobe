@@ -4,14 +4,14 @@ import 'package:kobe_flutter/pages/Biblioteca/pdf_viewer_screen.dart';
 import 'package:kobe_flutter/pages/Biblioteca/pdf_upload.dart';
 import 'package:kobe_flutter/pages/config.dart';
 
-class biblioteca extends StatefulWidget {
-  const biblioteca({super.key});
+class Biblioteca extends StatefulWidget {
+  const Biblioteca({Key? key});
 
   @override
-  _bibliotecaState createState() => _bibliotecaState();
+  _BibliotecaState createState() => _BibliotecaState();
 }
 
-class _bibliotecaState extends State<biblioteca> {
+class _BibliotecaState extends State<Biblioteca> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> pdfData = [];
   List<Map<String, dynamic>> filteredPdfData = [];
@@ -24,7 +24,8 @@ class _bibliotecaState extends State<biblioteca> {
 
   Future<void> getAllPdf() async {
     final results = await _firebaseFirestore.collection("pdfs").get();
-    pdfData = results.docs.map((e) => e.data()).toList();
+    pdfData =
+        results.docs.map((e) => e.data() as Map<String, dynamic>).toList();
     filteredPdfData = List.from(pdfData);
     setState(() {});
   }
@@ -94,10 +95,6 @@ class _bibliotecaState extends State<biblioteca> {
             ),
             title: Row(
               children: [
-                // Text(
-                //   'Biblioteca',
-                //   style: TextStyle(fontSize: 20, color: Colors.white),
-                // ),
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.settings),
@@ -106,7 +103,8 @@ class _bibliotecaState extends State<biblioteca> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ConfigurationScreen()),
+                        builder: (context) => ConfigurationScreen(),
+                      ),
                     );
                   },
                 ),
@@ -129,7 +127,8 @@ class _bibliotecaState extends State<biblioteca> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => PdfViewerScreen(
-                              pdfUrl: filteredPdfData[index]['url']),
+                            pdfUrl: filteredPdfData[index]['url'],
+                          ),
                         ),
                       );
                     },
@@ -149,18 +148,6 @@ class _bibliotecaState extends State<biblioteca> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                            child: Image.asset(
-                              "assets/pdf.png",
-                              height: 120,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -182,10 +169,10 @@ class _bibliotecaState extends State<biblioteca> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.upload_file),
-        onPressed: pickFile,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.upload_file),
+      //   onPressed: pickFile,
+      // ),
     );
   }
 }

@@ -28,7 +28,7 @@ class _MyHomePage extends State<MyHomePage> {
         children: const [
           inicio(),
           Recetas(),
-          biblioteca(),
+          Biblioteca(),
           juegos(),
         ],
       ),
