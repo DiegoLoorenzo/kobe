@@ -65,7 +65,7 @@ class _ScreenState extends State<screen> {
           padding: EdgeInsets.symmetric(vertical: 15),
         ),
         child: Text(
-          "Empezar",
+          "Comenzar",
           style: TextStyle(
             color: Colors.white,
             fontSize: 30,
