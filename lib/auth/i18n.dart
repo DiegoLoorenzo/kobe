@@ -35,10 +35,40 @@ class AppLocalizations {
           name: 'acceptPrivacyError',
           locale: locale,
         );
+      case 'user-not-found':
+        return Intl.message(
+          'Usuario no encontrado',
+          name: 'userNotFound',
+          locale: locale,
+        );
+      case 'wrong-password':
+        return Intl.message(
+          'Contraseña incorrecta',
+          name: 'wrongPassword',
+          locale: locale,
+        );
+      case 'unknown-error':
+        return Intl.message(
+          'Ocurrió un error desconocido',
+          name: 'unknownError',
+          locale: locale,
+        );
+      case 'invalid_login_credentials':
+        return Intl.message(
+          'Correo Electronico Incorrecto',
+          name: 'invalidCredentials',
+          locale: locale,
+        );
+      case 'badly-formatted-email':
+        return Intl.message(
+          'La dirección de correo electrónico está mal formateada',
+          name: 'badlyFormattedEmailError',
+          locale: locale,
+        );
       default:
         return Intl.message(
-          'Error al crear el usuario',
-          name: 'defaultError',
+          'Error desconocido',
+          name: 'unknownError',
           locale: locale,
         );
     }

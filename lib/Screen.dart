@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/auth/login_page.dart';
 
-class Screen extends StatefulWidget {
+class screen extends StatefulWidget {
   @override
   State createState() {
     return _ScreenState();
   }
 }
 
-class _ScreenState extends State<Screen> {
+class _ScreenState extends State<screen> {
   @override
   void initState() {
     super.initState();

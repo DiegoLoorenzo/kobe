@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kobe_flutter/auth/i18n.dart';
 import 'package:kobe_flutter/pages/Politica_de_Privacidad.dart';
+import 'package:kobe_flutter/auth/login_page.dart';
 
 class CreateUserPage extends StatefulWidget {
   @override
@@ -12,7 +13,8 @@ class CreateUserPage extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUserPage> {
   bool passwordVisible = true;
-  late String email, password;
+  bool confirmPasswordVisible = true;
+  late String email, password, confirmPassword;
   final _formkey = GlobalKey<FormState>();
   String error = '';
   bool acceptPolicy = false;
@@ -21,37 +23,31 @@ class _CreateUserState extends State<CreateUserPage> {
   void initState() {
     super.initState();
     passwordVisible = true;
+    confirmPasswordVisible = true;
+
+    password = '';
+    confirmPassword = '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Registro usuario K.O.B.E",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 22,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w700,
-            height: 0,
-          ),
-        ),
-        backgroundColor: Color(0xFFFFD974),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.asset('assets/icon250.png'),
+              padding: const EdgeInsets.all(6.0),
+              child: Transform.scale(
+                scale: 0.6, // Puedes ajustar el valor según tus necesidades
+                child: Image.asset('assets/icon250.png'),
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(1.0),
               child: Text(
-                "Bienvenido   a   K.O.B.E     Registrate",
+                "Bienvenido a K.O.B.E. Regístrate para empezar.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -84,26 +80,99 @@ class _CreateUserState extends State<CreateUserPage> {
               child: politica(),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
+              padding: EdgeInsets.fromLTRB(
+                  0, 0, 0, 20), // Ajusta el espacio inferior
               child: butonCrearUsuario(),
-            )
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "¿Ya tienes una cuenta? ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              LoginPage()), // Navegar a la página de inicio de sesión
+                    );
+                  },
+                  child: Text(
+                    "Inicia sesión aquí.",
+                    style: TextStyle(
+                      color: Colors.blue, // Cambiar a azul
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
+  // Campo de confirmación de la contraseña
+  Widget buildConfirmPasswordFormField() {
+    return TextFormField(
+      maxLength: 20,
+      obscureText: confirmPasswordVisible,
+      decoration: InputDecoration(
+        labelText: "Confirmar Contraseña",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: new BorderSide(color: Colors.black),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+              confirmPasswordVisible ? Icons.visibility : Icons.visibility_off),
+          onPressed: () {
+            setState(() {
+              confirmPasswordVisible = !confirmPasswordVisible;
+            });
+          },
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Este campo es obligatorio";
+        } else if (value != password) {
+          return "Las contraseñas no coinciden";
+        }
+        return null;
+      },
+      onSaved: (String? value) {
+        confirmPassword = value!;
+      },
+    );
+  }
+
   ///Capos del formulario
   Widget formulario() {
     return Form(
-        key: _formkey,
-        child: Column(
-          children: [
-            buildEmailFormField(),
-            const Padding(padding: EdgeInsets.only(top: 12)),
-            buildPasswordFormField()
-          ],
-        ));
+      key: _formkey,
+      child: Column(
+        children: [
+          buildEmailFormField(),
+          const Padding(padding: EdgeInsets.only(top: 12)),
+          buildPasswordFormField(),
+          const Padding(padding: EdgeInsets.only(top: 12)),
+          buildConfirmPasswordFormField(), // Nuevo campo para la confirmación de la contraseña
+        ],
+      ),
+    );
   }
 
   //Campo del Correo Electronico
