@@ -4,7 +4,6 @@ import 'package:kobe_flutter/pages/juegos/pages/quiz_page.dart';
 import 'package:kobe_flutter/pages/juegos/pages/elegir_tema.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page_dos.dart';
 import 'package:kobe_flutter/pages/juegos/pages/quiz_page_tres.dart';
-import 'package:kobe_flutter/pages/juegos/pages/results_page.dart';
 
 class juegos extends StatefulWidget {
   const juegos({super.key});

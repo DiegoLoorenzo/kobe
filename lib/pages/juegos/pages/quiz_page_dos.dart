@@ -106,8 +106,8 @@ class _QuizPageState extends State<QuizPageDos> {
               context,
               MaterialPageRoute(
                   builder: ((context) => ResultsPageDos(
-                    quiz: quiz,
-                  ))),
+                        quiz: quiz,
+                      ))),
             );
           },
           child: Text(
@@ -122,11 +122,18 @@ class _QuizPageState extends State<QuizPageDos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Color.fromARGB(255, 251, 251, 250),
       appBar: AppBar(
-        title: Text(quiz.name),
-        backgroundColor: Colors.indigo,
+        title: Text(
+          quiz.name,
+          style: Theme.of(context)
+              .textTheme
+              .headline6!
+              .copyWith(color: Colors.black),
+        ),
+        backgroundColor: Color.fromARGB(255, 255, 255, 253),
         elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -136,7 +143,7 @@ class _QuizPageState extends State<QuizPageDos> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: LinearProgressIndicator(
-                color: Colors.amber.shade900,
+                color: Color.fromARGB(255, 39, 126, 184),
                 value: progressIndex / totalQuestions,
                 minHeight: 20,
               ),
@@ -148,68 +155,90 @@ class _QuizPageState extends State<QuizPageDos> {
               margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
               child: quiz.questions.isNotEmpty
                   ? Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(15),
-                      child: Text(
-                        quiz.questions[questionIndex].questionDos,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                    ),
-                    Flexible(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: totalOptions,
-                        itemBuilder: (_, index) {
-                          return Container(
-                            margin: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.indigo.shade100,
-                                  width: 2),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: ListTile(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
+                      color: Color.fromARGB(248, 235, 233, 233),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(15),
+                            child: Text(
+                              quiz.questions[questionIndex].questionDos,
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
                               ),
-                              leading: Text('${index + 1}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1),
-                              title: Text(
-                                  quiz.questions[questionIndex]
-                                      .options[index],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1),
-                              onTap: () {
-                                _optionSelected(quiz
-                                    .questions[questionIndex]
-                                    .options[index]);
+                            ),
+                          ),
+                          Flexible(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: totalOptions,
+                              itemBuilder: (_, index) {
+                                return Container(
+                                  margin: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color:
+                                            Color.fromARGB(255, 145, 143, 143),
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: ListTile(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                    ),
+                                    leading: Text(
+                                      '${index + 1}',
+                                      style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 145, 143, 143),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    title: Text(
+                                      quiz.questions[questionIndex]
+                                          .options[index],
+                                      style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 118, 117, 117),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      _optionSelected(quiz
+                                          .questions[questionIndex]
+                                          .options[index]);
+                                    },
+                                  ),
+                                );
                               },
                             ),
-                          );
-                        },
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              )
+                    )
                   : const CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
+                      backgroundColor: Colors.white,
+                    ),
             ),
           ),
           TextButton(
             onPressed: () {
               _optionSelected('Skipped');
             },
-            child: Text('Saltar', style: Theme.of(context).textTheme.bodyText1),
+            child: Text(
+              'Saltar',
+              style: TextStyle(
+                color: Colors.black, // Cambiar el color del texto a negro
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

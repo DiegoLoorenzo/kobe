@@ -8,7 +8,6 @@ class elegir_tema extends StatefulWidget {
 }
 
 class _elegir_tema extends State<elegir_tema> {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,7 +20,7 @@ class _elegir_tema extends State<elegir_tema> {
             margin: const EdgeInsets.only(top: 50, bottom: 25),
             child: const Center(
               child: Text(
-                'Elegir un tema:',
+                'Elije un tema:',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
@@ -29,13 +28,14 @@ class _elegir_tema extends State<elegir_tema> {
               ),
             ),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border:
+                    Border.all(color: const Color.fromARGB(255, 255, 255, 255)),
                 gradient: LinearGradient(
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      Colors.indigo.shade200,
-                      Colors.purple.shade300
+                      Color.fromARGB(255, 232, 235, 102),
+                      Color.fromARGB(255, 255, 162, 118)
                     ]),
                 borderRadius: BorderRadius.circular(5)),
           ),
@@ -46,9 +46,7 @@ class _elegir_tema extends State<elegir_tema> {
             child: const Text('Tema 1 - Cortes'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColorLight,
+              backgroundColor: Theme.of(context).primaryColorLight,
               elevation: 4,
               side: const BorderSide(width: 1),
             ),
@@ -60,9 +58,7 @@ class _elegir_tema extends State<elegir_tema> {
             child: const Text('Tema 2 - Métodos y técnicas de cocina'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColorLight,
+              backgroundColor: Theme.of(context).primaryColorLight,
               elevation: 4,
               side: const BorderSide(width: 1),
             ),
@@ -74,9 +70,7 @@ class _elegir_tema extends State<elegir_tema> {
             child: const Text('Tema 3 - Equipo mayor, menor y utensilios'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColorLight,
+              backgroundColor: Theme.of(context).primaryColorLight,
               elevation: 4,
               side: const BorderSide(width: 1),
             ),
@@ -88,9 +82,7 @@ class _elegir_tema extends State<elegir_tema> {
             child: const Text('Regresar'),
             style: OutlinedButton.styleFrom(
               primary: Colors.black,
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColorLight,
+              backgroundColor: Theme.of(context).primaryColorLight,
               elevation: 4,
               side: const BorderSide(width: 1),
             ),

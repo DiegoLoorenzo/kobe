@@ -9,7 +9,7 @@ class ResultsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorDark,
+      backgroundColor: Color.fromARGB(255, 251, 251, 250),
       appBar: AppBar(
         title: Text(quiz.name),
         backgroundColor: Theme.of(context).primaryColorDark,
@@ -21,7 +21,7 @@ class ResultsPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               margin:
-              const EdgeInsets.only(left: 3, right: 3, top: 2, bottom: 10),
+                  const EdgeInsets.only(left: 3, right: 3, top: 2, bottom: 10),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.indigo.shade50,
@@ -66,8 +66,7 @@ class ResultsPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
                 );
               },
               child: Text(
