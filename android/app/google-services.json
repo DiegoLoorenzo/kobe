@@ -78,6 +78,51 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217560062358:android:8379d3a7e865b60fabe5b7",
+        "android_client_info": {
+          "package_name": "com.innovatech.kobe_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217560062358-h2lvbd7hlliq2r3rn255lu01i2p6ag92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.innovatech.kobe_flutter",
+            "certificate_hash": "9e92b86f3420fc7e4cdaad7a070b44d67a29a820"
+          }
+        },
+        {
+          "client_id": "217560062358-i66bdap0rkgroe26dnd6qkavjtlm30cd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.innovatech.kobe_flutter",
+            "certificate_hash": "04e0585c71545527394c81a027e4032b3ce65366"
+          }
+        },
+        {
+          "client_id": "217560062358-b91pnb18u6ut32ii7c3ldlaic5389f6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvDuaUlIySc_Rk-MGaLx1KPBRSWNJl7Ls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217560062358-b91pnb18u6ut32ii7c3ldlaic5389f6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
