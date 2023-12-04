@@ -80,7 +80,7 @@ class _resetpasswordState extends State<reset_password>{
   Widget buildEmail(){
     return TextFormField(
       decoration: InputDecoration(
-        labelText: "Email" ,
+        labelText: "Correo Electrónico" ,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: new BorderSide(color: Colors.black)

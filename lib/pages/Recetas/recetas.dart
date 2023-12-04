@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:kobe_flutter/pages/Recetas/RecetaComplementaria.dart';
+import 'package:kobe_flutter/pages/Recetas/RecetaEstandar.dart';
 
 class Recetas extends StatefulWidget {
   const Recetas({Key? key}) : super(key: key);
@@ -39,12 +42,13 @@ class _RecetasState extends State<Recetas> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.grey[200],
         body: Stack(
           children: [
             // Fondo del AppBar
             Container(
               height: MediaQuery.of(context).size.height * 0.28,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFFFFD974),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
@@ -53,7 +57,7 @@ class _RecetasState extends State<Recetas> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,26 +68,26 @@ class _RecetasState extends State<Recetas> {
                       // Contenedor del primer icono
                       Container(
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 236, 185),
+                          color: const Color.fromARGB(255, 255, 236, 185),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.file_download),
+                          icon: const Icon(Icons.file_download),
                           color: const Color.fromARGB(255, 0, 0, 0),
                           onPressed: () {
                             print('Botón de Descargas presionado');
                           },
                         ),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       // Contenedor del segundo icono
                       Container(
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 236, 185),
+                          color: const Color.fromARGB(255, 255, 236, 185),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.settings),
+                          icon: const Icon(Icons.settings),
                           color: const Color.fromARGB(255, 0, 0, 0),
                           onPressed: () {
                             print('Botón de Configuración presionado');
@@ -92,49 +96,7 @@ class _RecetasState extends State<Recetas> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  TabBar(
-                    labelStyle: TextStyle(fontSize: 18),
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                          10), // Bordes de la línea indicadora
-                      color: Color.fromARGB(255, 238, 126,
-                          51), // Color de fondo de la línea indicadora
-                    ),
-                    labelColor: Colors.white, // Color del texto seleccionado
-                    unselectedLabelColor:
-                        Colors.black, // Color del texto no seleccionado
-                    tabs: [
-                      Tab(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color.fromARGB(61, 238, 126, 51),
-                            // Color de fondo del tab no seleccionado
-                          ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text('Mis Recetas'),
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color.fromARGB(61, 238, 126,
-                                51), // Color de fondo del tab no seleccionado
-                          ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text('Costeo'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Expanded(
                     child: TabBarView(
                       children: [
@@ -154,7 +116,7 @@ class _RecetasState extends State<Recetas> {
                                   controller: _searchController,
                                   onChanged: (filtro) =>
                                       filtrarRegistros(filtro),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'Buscar en K.O.B.E',
                                     prefixIcon: Icon(Icons.search),
                                     border: InputBorder.none,
@@ -164,12 +126,21 @@ class _RecetasState extends State<Recetas> {
                               ),
                             ),
                             // ListView
+                            const SizedBox(height: 15),
                             Expanded(
                               child: ListView.builder(
+                                padding: const EdgeInsets.all(10),
                                 itemCount: registrosFiltrados.length,
                                 itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(registrosFiltrados[index]),
+                                  return Container(
+                                    margin: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(registrosFiltrados[index]),
+                                    ),
                                   );
                                 },
                               ),
@@ -177,7 +148,7 @@ class _RecetasState extends State<Recetas> {
                           ],
                         ),
                         // Contenido de la pestaña Configuración
-                        Center(
+                        const Center(
                           child: Text('Contenido de Configuración'),
                         ),
                       ],
@@ -185,6 +156,46 @@ class _RecetasState extends State<Recetas> {
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+        floatingActionButton: SpeedDial(
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          backgroundColor: Colors.orange,
+          overlayColor: Colors.white,
+          // label: const Text('Receta'),
+          overlayOpacity: 0.8,
+          spacing: 20,
+          spaceBetweenChildren: 5,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.add_to_photos_rounded),
+              labelBackgroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.grey,
+              label: 'Receta Complementaria',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RecetaComplementaria()),
+                );
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.add_to_photos_outlined),
+              labelBackgroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.grey,
+              label: 'Receta Estandar',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RecetaEstandar()),
+                );
+              },
             ),
           ],
         ),

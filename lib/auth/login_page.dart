@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
-import 'package:kobe_flutter/auth/reset_password/reset_password.dart';
 import 'package:kobe_flutter/auth/create_user.dart';
+import 'package:kobe_flutter/auth/reset_password/reset_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +15,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+  Map<String, String> errorMessages = {
+    'user-not-found': 'Usuario no encontrado. Verifica tu correo electrónico.',
+    'wrong-password': 'Contraseña incorrecta. Por favor, intenta nuevamente.',
+    'The email address is badly formatted.':
+        'La dirección de correo electrónico tiene un formato incorrecto.',
+    'INVALID_LOGIN_CREDENTIALS': 'Credenciales de inicio de sesión inválidas.',
+    'We have blocked all requests from this device due to unusual activity. Try again later.':
+        'Hemos bloqueado todas las solicitudes desde este dispositivo debido a actividad inusual. Inténtalo de nuevo más tarde.',
+  };
   bool passwordVisible = false;
   String email = '', password = '';
   final _formkey = GlobalKey<FormState>();
@@ -53,7 +62,7 @@ class _LoginState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.all(50.0),
               child: Image.asset('assets/icon250.png'),
             ),
             Padding(
@@ -211,7 +220,7 @@ class _LoginState extends State<LoginPage> {
   Widget buildEmail() {
     return TextFormField(
       decoration: InputDecoration(
-          labelText: "Correo Electronico",
+          labelText: "Correo Electrónico",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide:
@@ -310,16 +319,37 @@ class _LoginState extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: passwd);
       return userCredential;
-    } on FirebaseException catch (e) {
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage =
+              'Usuario no encontrado. Verifica tu correo electrónico.';
+          break;
+        case 'wrong-password':
+          errorMessage =
+              'Contraseña incorrecta. Por favor, intenta nuevamente.';
+          break;
+        case 'invalid-email':
+          errorMessage =
+              'La dirección de correo electrónico tiene un formato incorrecto.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'El usuario ha sido deshabilitado.';
+          break;
+        case 'INVALID_LOGIN_CREDENTIALS':
+          errorMessage = 'El correo o contraseña son incorrectos';
+          break;
+        // Agrega más casos según tus necesidades
+        default:
+          errorMessage = 'Ocurrió un error: ${e.message}';
+      }
+
       setState(() {
-        if (e.code == 'user-not-found') {
-          error = "Usuario no encontrado";
-        } else if (e.code == 'wrong-password') {
-          error = "Contraseña incorrecta";
-        } else {
-          error = "Ocurrió un error: ${e.code}";
-        }
+        error = errorMessage;
       });
+
       return null;
     }
   }
