@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/Biblioteca/pdf_viewer_screen.dart';
-import 'package:kobe_flutter/pages/Biblioteca/pdf_upload.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kobe_flutter/pages/config.dart';
 
 class Biblioteca extends StatefulWidget {
@@ -13,6 +16,7 @@ class Biblioteca extends StatefulWidget {
 
 class _BibliotecaState extends State<Biblioteca> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   List<Map<String, dynamic>> pdfData = [];
   List<Map<String, dynamic>> filteredPdfData = [];
 
@@ -23,14 +27,67 @@ class _BibliotecaState extends State<Biblioteca> {
   }
 
   Future<void> getAllPdf() async {
-    final results = await _firebaseFirestore.collection("pdfs").get();
-    pdfData =
-        results.docs.map((e) => e.data() as Map<String, dynamic>).toList();
+    final results = await _firebaseFirestore.collection("libros").get();
+    pdfData = results.docs.map((e) => e.data()).toList();
     filteredPdfData = List.from(pdfData);
     setState(() {});
   }
 
-  // Filtro los libros
+  Future<String?> uploadPdfAndImage(
+      String pdfFileName, File pdfFile, File imageFile) async {
+    final pdfReference =
+        _firebaseStorage.ref().child("libros/$pdfFileName.pdf");
+    final pdfUploadTask = pdfReference.putFile(pdfFile);
+    await pdfUploadTask.whenComplete(() {});
+
+    final pdfDownloadLink = await pdfReference.getDownloadURL();
+
+    final imageReference =
+        _firebaseStorage.ref().child("images/${DateTime.now()}.png");
+    final imageUploadTask = imageReference.putFile(imageFile);
+    await imageUploadTask.whenComplete(() {});
+
+    final imageDownloadLink = await imageReference.getDownloadURL();
+
+    final documentReference =
+        await _firebaseFirestore.collection('libros').add({
+      'name': pdfFileName,
+      'pdfUrl': pdfDownloadLink,
+      'imageUrl': imageDownloadLink,
+    });
+
+    filteredPdfData.add({
+      'name': pdfFileName,
+      'pdfUrl': pdfDownloadLink,
+      'imageUrl': imageDownloadLink,
+    });
+
+    setState(() {});
+
+    return documentReference.id;
+  }
+
+  void pickFile() async {
+    final pdfPickedFile = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    final imagePickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pdfPickedFile != null && imagePickedFile != null) {
+      String pdfFileName = pdfPickedFile.files[0].name;
+      File pdfFile = File(pdfPickedFile.files[0].path!);
+      File imageFile = File(imagePickedFile.path!);
+
+      final documentId =
+          await uploadPdfAndImage(pdfFileName, pdfFile, imageFile);
+
+      print("Libro agregado con ID: $documentId");
+    }
+  }
+
   void filterBooks(String query) {
     setState(() {
       filteredPdfData = pdfData
@@ -114,49 +171,41 @@ class _BibliotecaState extends State<Biblioteca> {
           SliverToBoxAdapter(
             child: SizedBox(height: 16.0),
           ),
-          SliverList(
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 0.65,
+            ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
+                  padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => PdfViewerScreen(
-                            pdfUrl: filteredPdfData[index]['url'],
-                          ),
-                        ),
+                            builder: (context) => PdfViewerScreen(
+                                  pdfUrl: pdfData[index]['pdfUrl'],
+                                )),
                       );
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
+                    child: Card(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              filteredPdfData[index]['name'],
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          Image.network(
+                            pdfData[index]['imageUrl'],
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
+                          Text(
+                            pdfData[index]['name'],
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -164,15 +213,51 @@ class _BibliotecaState extends State<Biblioteca> {
                   ),
                 );
               },
-              childCount: filteredPdfData.length,
+              childCount: pdfData.length,
             ),
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.upload_file),
-      //   onPressed: pickFile,
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.upload_file),
+        onPressed: pickFile,
+      ),
+    );
+  }
+}
+
+class PdfViewerScreen extends StatefulWidget {
+  final String pdfUrl;
+  const PdfViewerScreen({Key? key, required this.pdfUrl});
+
+  @override
+  State<PdfViewerScreen> createState() => _PdfViewerScreenState();
+}
+
+class _PdfViewerScreenState extends State<PdfViewerScreen> {
+  PDFDocument? document;
+
+  void initialisePdf() async {
+    document = await PDFDocument.fromURL(widget.pdfUrl);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initialisePdf();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: document != null
+          ? PDFViewer(
+              document: document!,
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
