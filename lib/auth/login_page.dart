@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kobe_flutter/MyHomePage.dart';
-import 'package:kobe_flutter/auth/reset_password/reset_password.dart';
 import 'package:kobe_flutter/auth/create_user.dart';
+import 'package:kobe_flutter/auth/reset_password/reset_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -62,7 +62,7 @@ class _LoginState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding: const EdgeInsets.all(50.0),
               child: Image.asset('assets/icon250.png'),
             ),
             Padding(
@@ -220,7 +220,7 @@ class _LoginState extends State<LoginPage> {
   Widget buildEmail() {
     return TextFormField(
       decoration: InputDecoration(
-          labelText: "Correo Electronico",
+          labelText: "Correo Electrónico",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide:

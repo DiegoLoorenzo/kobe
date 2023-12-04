@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kobe_flutter/pages/configuration/privacy_policy.dart';
 import 'package:kobe_flutter/auth/login_page.dart';
+import 'package:kobe_flutter/pages/configuration/privacy_policy.dart';
 
 class CreateUserPage extends StatefulWidget {
   @override
@@ -32,9 +32,9 @@ class _CreateUserState extends State<CreateUserPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: const EdgeInsets.all(60.0),
               child: Transform.scale(
-                scale: 0.6, // Puedes ajustar el valor según tus necesidades
+                scale: 1.0, // Puedes ajustar el valor según tus necesidades
                 child: Image.asset('assets/icon250.png'),
               ),
             ),
@@ -59,7 +59,7 @@ class _CreateUserState extends State<CreateUserPage> {
                 child: Text(
                   error,
                   style: TextStyle(
-                    color: Color.fromARGB(255, 42, 108, 252),
+                    color: Color.fromARGB(255, 253, 0, 0),
                     fontSize: 16,
                   ),
                 ),
@@ -180,6 +180,7 @@ class _CreateUserState extends State<CreateUserPage> {
         }
         return null;
       },
+      keyboardType: TextInputType.visiblePassword,
       onSaved: (String? value) {
         password = value!;
       },
