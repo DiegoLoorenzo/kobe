@@ -89,11 +89,13 @@ class _BibliotecaState extends State<Biblioteca> {
   }
 
   void filterBooks(String query) {
+    print("Query: $query");
     setState(() {
       filteredPdfData = pdfData
           .where((book) =>
               book['name'].toLowerCase().contains(query.toLowerCase()))
           .toList();
+      print("Filtered Data: $filteredPdfData");
     });
   }
 
@@ -104,7 +106,7 @@ class _BibliotecaState extends State<Biblioteca> {
         slivers: [
           SliverAppBar(
             backgroundColor: Color(0xFFFFD974),
-            expandedHeight: MediaQuery.of(context).size.height * 0.16,
+            expandedHeight: MediaQuery.of(context).size.height * 0.12,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -120,31 +122,43 @@ class _BibliotecaState extends State<Biblioteca> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 16.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 8.0),
-                            Icon(Icons.search),
-                            SizedBox(width: 8.0),
-                            Expanded(
-                              child: TextField(
-                                onChanged: (query) {
-                                  filterBooks(query);
-                                },
-                                decoration: InputDecoration(
-                                  hintText: 'Buscar en K.O.B.E',
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Biblioteca',
+                          style: TextStyle(
+                            fontSize: 40,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+                      // Resto del código...
+                      // Container(
+                      //   margin: EdgeInsets.symmetric(horizontal: 16.0),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(30.0),
+                      //   ),
+                      //   child: Row(
+                      //     children: [
+                      //       SizedBox(width: 8.0),
+                      //       Icon(Icons.search),
+                      //       SizedBox(width: 8.0),
+                      //       Expanded(
+                      //         child: TextField(
+                      //           onChanged: (query) {
+                      //             filterBooks(query);
+                      //           },
+                      //           decoration: InputDecoration(
+                      //             hintText: 'Buscar en K.O.B.E',
+                      //             border: InputBorder.none,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -218,10 +232,10 @@ class _BibliotecaState extends State<Biblioteca> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.upload_file),
-        onPressed: pickFile,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.upload_file),
+      //   onPressed: pickFile,
+      // ),
     );
   }
 }
