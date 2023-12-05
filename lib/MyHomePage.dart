@@ -27,7 +27,9 @@ class _MyHomePage extends State<MyHomePage> {
         index: selctnavbar,
         children: const [
           inicio(),
-          Recetas(),
+          Recetas(
+            nombreReceta: '',
+          ),
           Biblioteca(),
           juegos(),
         ],

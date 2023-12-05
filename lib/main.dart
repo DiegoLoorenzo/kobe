@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:kobe_flutter/MyHomePage.dart';
 import 'package:kobe_flutter/auth/login_page.dart';
 
 void main() async {
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Aplicacion K.O.B.E",
-      home: LoginPage(),
+      home: MyHomePage(),
     );
   }
 }

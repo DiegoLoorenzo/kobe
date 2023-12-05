@@ -49,6 +49,7 @@ dependencies:
   easy_pdf_viewer:
   flutter_speed_dial:
   image_picker:
+  pdf: ^3.10.7
 
 dev_dependencies:
   flutter_launcher_icons:
