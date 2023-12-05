@@ -145,6 +145,166 @@ class PrivacyScreen extends StatelessWidget {
                   decoration: TextDecoration.underline,
                 ),
               ),
+              SizedBox(height: 16.0),
+              Text(
+                'Contrato de Términos y Condiciones de Uso del Software',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Este Contrato de Términos y Condiciones de Uso del Software ("Contrato") '
+                    'es celebrado entre el usuario final ("Usuario") y Innovatech, una entidad legalmente '
+                    'constituida con dirección en Ocosingo, Chiapas, México, en adelante referido '
+                    'como el "Proveedor".',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '1. Licencia de Software:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '1.1 Concesión de Licencia:  '
+                    '- El Proveedor otorga al Usuario una licencia no exclusiva, intransferible y revocable para utilizar el software proporcionado por el Proveedor, incluyendo todas las funciones y características asociadas (en adelante, el "Software").',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                '1.2 Alcance de la Licencia: '
+                    '- La licencia concede al Usuario el derecho de utilizar el Software únicamente con el propósito previsto de acuerdo con la descripción proporcionada por el Proveedor. Cualquier uso no autorizado está estrictamente prohibido.',
+                  style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+               '1.3 Restricciones: '
+                    '- El Usuario se compromete a no modificar, adaptar, traducir, realizar ingeniería inversa, descompilar, desmontar o intentar derivar el código fuente del Software ni a permitir que terceros lo hagan.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '2. Términos de Uso:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '2.1 Registro: '
+                    '- Para acceder y utilizar el Software, el Usuario puede ser requerido a registrarse proporcionando información precisa y actualizada. El Usuario es responsable de mantener la confidencialidad de sus credenciales de acceso.',
+                   style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                '2.2 Uso Adecuado: '
+                    '- El Usuario se compromete a utilizar el Software de manera legal, ética y conforme a este Contrato. Se prohíbe el uso del Software para cualquier actividad ilegal o que viole los derechos de terceros.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '3. Propiedad Intelectual:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                  '3.1 Derechos de Propiedad: '
+                      '- El Usuario reconoce que todos los derechos de propiedad intelectual sobre el Software, incluyendo pero no limitado a derechos de autor, marcas registradas y secretos comerciales, pertenecen exclusivamente al Proveedor.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                '3.2 Comentarios y Mejoras: '
+                    '- El Usuario tiene derecho a proporcionar comentarios y sugerencias sobre el Software. Cualquier mejora, actualización o modificación basada en estos comentarios será propiedad exclusiva del Proveedor.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '4. Actualizaciones y Mantenimiento:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                  '4.1 Actualizaciones: '
+                      '- El Proveedor puede proporcionar actualizaciones periódicas del Software para mejorar la funcionalidad y corregir errores. Estas actualizaciones estarán sujetas a los términos de este Contrato.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '5. Limitación de Responsabilidad:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '5.1 Uso bajo su Propio Riesgo: '
+                    '- El Usuario reconoce que el uso del Software es bajo su propio riesgo. El Proveedor no será responsable de pérdidas, daños o perjuicios directos o indirectos derivados del uso o incapacidad de uso del Software.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '6. Duración y Terminación:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '6.1 Duración: '
+                    '- Este Contrato entrará en vigor en el momento en que el Usuario acepte sus términos y continuará hasta que sea terminado por cualquiera de las partes.',
+                  style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                '6.2 Terminación: '
+                    '- El Proveedor se reserva el derecho de terminar este Contrato y la licencia otorgada si el Usuario incumple cualquiera de los términos establecidos. En caso de terminación, el Usuario deberá dejar de usar el Software.',
+                  style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                '7. Disposiciones Generales:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '7.1 Modificaciones: '
+                    '- El Proveedor se reserva el derecho de modificar los términos de este Contrato en cualquier momento. Las modificaciones serán efectivas al ser publicadas en el sitio web del Proveedor.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              Text(
+                '7.2 Ley Aplicable: '
+                    '- Este Contrato se regirá e interpretará de acuerdo con las leyes de los Estados Unidos Mexicanos, excluyendo cualquier conflicto de disposiciones legales.',
+              style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Aceptación de Términos:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'El Usuario manifiesta haber leído y entendido este Contrato, aceptando todos sus términos y condiciones al utilizar el Software proporcionado por el Proveedor.',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Innovatech',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Ocosingo, Chiapas, Mexico',
+                style: TextStyle(
+                  fontSize: 16.0,
+
+                ),
+              ),
             ],
           ),
         ),

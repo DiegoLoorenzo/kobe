@@ -211,7 +211,7 @@ class _CreateUserState extends State<CreateUserPage> {
             "Acepto la Política de Privacidad",
             style: TextStyle(
               color: Color(0xFF3FA8EE),
-              fontSize: 15,
+              fontSize: 14,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
